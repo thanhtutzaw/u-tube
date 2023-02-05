@@ -30,7 +30,7 @@ export default function Home() {
         <Card setCounter={setCounter}>{counter}</Card> */}
           <Drawer openDrawer={openDrawer}>
             <ul>
-              <PrimaryInput />
+              {/* <PrimaryInput /> */}
               {Array.from(Array(20), (_, i) => (
                 <Comment key={i} />
               ))}
