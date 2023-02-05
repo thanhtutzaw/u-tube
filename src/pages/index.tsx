@@ -21,6 +21,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+        <button style={{padding:'1rem',zIndex:'300',position:'fixed'}} onClick={() => setopenDrawer(prev => !prev)}>Open</button>
       <main className={styles.main}>
         {/* <Card setCounter={setCounter} counter={counter} /> */}
         {/* <Card setCounter={setCounter}>{counter}</Card>
@@ -35,7 +36,6 @@ export default function Home() {
               ))}
             </ul>
           </Drawer>
-          <button onClick={() => setopenDrawer(prev => !prev)}>Open</button>
       </main>
     </>
   );

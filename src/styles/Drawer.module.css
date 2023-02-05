@@ -1,35 +1,42 @@
 .drawer {
-    border      : 3px solid red;
-    height      : 100vh;
-    overflow-y  : scroll;
-    /* transform   : translateY(461px); */
-    opacity     : 0;
-    transition  : all .3s ease;
-    /* transform: translateY(0px); */
+    /* border      : 3px solid red; */
+    height          : 100vh;
+    overflow-y      : scroll;
+    /* transform    : translateY(461px); */
+    opacity         : 0;
+    transition      : all .3s ease;
+    /* transform    : translateY(0px); */
     background-color: rgba(0 0 0 / 0.5);
-    will-change : opacity;
+    will-change     : opacity;
+
 }
 
 .open {
-    opacity         : 1;
+    opacity            : 1;
     /* transform       : translateY(0px); */
 }
 
 .drawerContainer {
     /* border:3px solid red; */
     /* background-color: rgb(194, 194, 194); */
-    background-color: rgb(214, 214, 214);
-    background-color: rgb(230, 230, 230);
-    border-radius   : 1rem;
+    background-color       : rgb(214, 214, 214);
+    background-color       : rgb(230, 230, 230);
+    background-color       : rgb(255, 255, 255);
+    /* border-radius       : 1rem; */
+    border-top-left-radius : 1rem;
+    border-top-right-radius: 1rem;
     /* transform    : translateY(30px); */
     /* transform       : translateY(255px) */
     /* transform : translateY(461px); */
-    transform : translateY(700px);
-    transition: all .3s ease;
-    will-change : transform;
+    transform  : translateY(700px);
+    transition : all .3s ease;
+    will-change: transform;
+    height     : 100vh;
+    overflow   : hidden;
 }
-.drawerContainer.open{
-    transform : translateY(255px);
+
+.drawerContainer.open {
+    transform: translateY(255px);
 }
 
 .phill {

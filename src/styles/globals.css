@@ -95,8 +95,12 @@ a {
 }
 
 ul {
-  margin-top: 67px;
-  list-style: none;
+      margin-top: 36px;
+  /* margin-top    : 67px; */
+  list-style    : none;
+  overflow      : scroll;
+  height        : 100%;
+  padding-bottom: 6.2rem;
 }
 
 ::-webkit-scrollbar {

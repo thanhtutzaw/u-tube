@@ -1,5 +1,5 @@
 // import { count } from "console";
-import {  useState } from "react";
+import { createRef, useRef, useState } from "react";
 import { SecondaryInput } from "./SecondaryInput";
 import s from "@/styles/Home.module.css";
 // type ICounter ={
@@ -10,9 +10,14 @@ import s from "@/styles/Home.module.css";
 
 export function Comment() {
   const [counter, setCounter] = useState<number>(0);
-  const [openInput, setOpenInput] = useState(false)
-  function handleInput(){
-setOpenInput(prev => !prev)
+  const [openInput, setOpenInput] = useState(false);
+  function handleInput() {
+    
+    setOpenInput((prev) => !prev);
+    
+  }
+  function focusInput(){
+
   }
 
   return (
@@ -40,7 +45,11 @@ setOpenInput(prev => !prev)
         </button>
         {/* <button onClick={setCounter((counter) => counter - 1)}>Dislike</button> */}
       </div>
-      {openInput && <SecondaryInput handleInput={handleInput} />}
+      {openInput && (
+        <SecondaryInput
+          handleInput={handleInput}
+        />
+      )}
     </li>
   );
 }

@@ -1,13 +1,13 @@
 .main {
-  display            : flex;
-  /* align-items     : center; */
-  justify-content    : center;
+  display               : flex;
+  /* align-items        : center; */
+  justify-content       : center;
   /* padding            : 1rem; */
-  min-height         : 100vh;
-  background-color   : white;
-  max-width          : 500px;
-  width              : 100vw;
-  margin             : 0 auto;
+  min-height            : 100vh;
+  background-color      : white;
+  max-width             : 500px;
+  width                 : 100vw;
+  margin                : 0 auto;
 }
 
 .likeBtn,
@@ -86,15 +86,18 @@
   padding: 1rem;
   gap    : .5rem;
 }
-.primaryInput{
+
+.primaryInput {
   display: flex;
 }
-.commentActions{
-display        : flex;
-justify-content: flex-end;
-flex           : 1;
-gap            : 1rem;
+
+.commentActions {
+  display        : flex;
+  justify-content: flex-end;
+  flex           : 1;
+  gap            : 1rem;
 }
+
 .primaryInput>input,
 .secondaryInput>input {
   flex            : 1;
@@ -105,25 +108,29 @@ gap            : 1rem;
   background-color: rgb(235, 235, 235);
   font-size       : 100%;
   padding         : 5px;
-  height: 44px;
+  height          : 44px;
 }
-.primaryInput>input{
+
+.primaryInput>input {
   background-color: transparent;
-  border:0;
+  border          : 0;
   /* border-bottom: 2px solid red; */
   /* border-bottom: 2px solid rgba(0, 140, 255, 0.418); */
-  border-bottom: 2px solid rgba(0, 119, 255, 0.377);
-  border-radius: initial;
-  transition: all .3s ease-in-out;
-  width: unset;
+  border-bottom   : 2px solid rgba(0, 119, 255, 0.377);
+  border-radius   : initial;
+  transition      : all .3s ease-in-out;
+  width           : unset;
 }
+
+
+
 @media only screen and (max-width: 600px) {
-  .primaryInput>input {
+  .primaryInput>input {}
 }
-}
-.primaryInput>input:focus{
+
+.primaryInput>input:focus {
   /* outline: 1px solid rgb(204, 204, 204); */
-  outline: none;
+  outline      : none;
   border-bottom: 2px solid rgb(0, 119, 255);
 }
 
@@ -134,16 +141,16 @@ gap            : 1rem;
 .primaryInput {
   background-color: white;
   position        : fixed;
-  bottom             : 0;
+  bottom          : 0;
   right           : 0;
   left            : 0;
   margin          : 0 auto;
   width           : 100vw;
   max-width       : 500px;
-  border-top   : 1px solid rgb(221, 221, 221);
+  border-top      : 1px solid rgb(221, 221, 221);
   box-shadow      : 0 -3px 5px rgb(236, 236, 236);
   z-index         : 100;
-  flex-wrap: wrap;
+  flex-wrap       : wrap;
 
 }
 
@@ -151,7 +158,17 @@ gap            : 1rem;
   /* padding: 0.5rem 1rem; */
   padding: 1rem;
 }
-
+.secondaryInput>input{
+  background-color: transparent;
+  border          : 0;
+  /* border-bottom: 2px solid red; */
+  /* border-bottom: 2px solid rgba(0, 140, 255, 0.418); */
+  border-bottom   : 2px solid rgba(0, 119, 255, 0.377);
+  border-radius   : initial;
+}
+.secondaryInput>input:focus{
+  outline:none;
+}
 .description {
   display        : inherit;
   justify-content: inherit;
@@ -201,10 +218,10 @@ gap            : 1rem;
   max-width            : 500px;
   flex-wrap            : wrap;
 
-    display    : flex;
-  align-items: center;
-  gap        : .5rem;
-  text-align : center;
+  display              : flex;
+  align-items          : center;
+  gap                  : .5rem;
+  text-align           : center;
   /* scroll-padding-top: 1rem; */
 }
 
