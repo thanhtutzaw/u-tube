@@ -110,10 +110,10 @@ ul {
 }
 li:last-child{
   /* border:3px solid red; */
-  margin-bottom: 12rem;
+  /* margin-bottom: 12rem; */
   background-color: red;
 }
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width     : 0;
   display   : none;
   background: transparent;
@@ -121,4 +121,4 @@ li:last-child{
 
 ::-webkit-scrollbar-thumb {
   background: #a0a0a0;
-} */
+}
