@@ -1,48 +1,69 @@
-.drawer {
-    /* border      : 3px solid red; */
-    height          : 100vh;
-    overflow-y      : scroll;
-    /* overflow: hidden; */
-    /* transform    : translateY(461px); */
-    opacity         : 0;
-    transition      : all .3s ease-in-out;
-    /* transform    : translateY(0px); */
-    background-color: rgba(0 0 0 / 0.5);
-    will-change     : opacity;
-    height : 100vh;
-    /* border: 3px solid red; */
-
+.backDrop {
+    height                : 100vh;
+    /* overflow-y         : scroll; */
+    overflow              : hidden;
+    /* transform          : translateY(461px); */
+    opacity               : 0;
+    transition            : opacity .3s ease-out;
+    /* transform          : translateY(0px); */
+    /* background-color      : rgba(0 0 0 / 0.5); */
+    will-change           : opacity;
+    height                : 100vh;
+    /* opacity            : 1; */
 }
 
-.open {
-    opacity            : 1;
+.backDrop.open {
     /* transform       : translateY(0px); */
+    opacity: 1;
+}
+.other{
+    
+height          : 100%;
+position        : fixed;
+top             : 0;
+inset           : 0;
+width           : 100vw;
+/* z-index         : -1; */
+max-width       : 500px;
+margin          : 0 auto;
+/* transition: all .1s ease-out; */
 }
 
-.drawerContainer {
+.container {
     /* border:3px solid red; */
     /* background-color: rgb(194, 194, 194); */
-    background-color       : rgb(214, 214, 214);
-    background-color       : rgb(230, 230, 230);
-    background-color       : rgb(255, 255, 255);
-    /* border-radius       : 1rem; */
-    border-top-left-radius : 1rem;
-    border-top-right-radius: 1rem;
-    /* transform           : translateY(30px); */
-    /* transform           : translateY(255px) */
-    /* transform           : translateY(461px); */
-    transform              : translateY(700px);
-    /* transition          : all .3s ease; */
-    /* transition             : transform .3s cubic-bezier(1, 0, 0, 1.02); */
-    transition: transform .3s ease-in-out;
-    will-change            : transform;
-    /* height                 : 100vh; */
-    overflow               : hidden;
+    background-color             : rgb(214, 214, 214);
+    background-color             : rgb(230, 230, 230);
+    background-color             : rgb(255, 255, 255);
+    /* border-radius             : 1rem; */
+    border-top-left-radius       : 1rem;
+    border-top-right-radius      : 1rem;
+    /* transform                 : translateY(700px); */
+    /* transform                 : translateY(100vh); */
+    /* transition                : transform .3s cubic-bezier(1, 0, 0, 1.02); */
+    /* transition                : transform .1s ease; */
+    transition                   : transform .3s ease-in-out;
+    /* will-change                  : transform; */
+    /* height                    : 100vh; */
+    height                       : 100%;
+    /* overflow-y                : scroll; */
 }
 
-.drawerContainer.open {
-    transform: translateY(255px);
-    /* transform: translateY(25px); */
+.container.open {
+    /* transform   : translateY(50vh); */
+
+    /* transform   : translateY(0vh); */
+    /* transform: translateY(255px); */
+}
+
+.content {
+    height          : 95vh;
+    height          : 45vh;
+    /* height       :100%; */
+    /* overflow     : scroll; */
+    overflow-x      : hidden;
+    overflow-y      : scroll;
+    background-color: rgba(255, 145, 0, 0.945);
 }
 
 .phill {
@@ -57,9 +78,14 @@
     left               : 50%;
     right              : 50%;
     transform          : translate(-50%);
+    cursor             : pointer;
 }
-.topBar{
-    background-color: rgb(245, 145, 145);
-    /* height:5vh; */
-    height:5vh;
+
+.topBar {
+    /* background-color: rgb(245, 145, 145); */
+    height: 5vh;
+}
+
+.content:hover::-webkit-scrollbar-thumb {
+    background: #c5c5c5;
 }
