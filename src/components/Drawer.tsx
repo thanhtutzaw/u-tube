@@ -1,103 +1,55 @@
-import { MouseEvent, ReactNode, useEffect, useState } from "react";
+import React, {
+  MouseEvent,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import s from "@/styles/Drawer.module.css";
 type DrawerProps = {
-  children: ReactNode;
+  mousePos: number;
+  setMousePos: Function;
+  children: ReactElement;
+  // children: ReactNode;
   openDrawer: boolean;
   setopenDrawer: Function;
 };
 export default function Drawer({
+  mousePos,
+  setMousePos,
   children,
   openDrawer,
   setopenDrawer,
 }: DrawerProps) {
   const [draggable, setDraggable] = useState(false);
-  const [pos, setpos] = useState({ y: 0, top: 0 });
-  const [mousePos, setMousePos] = useState(50);
   function dragStart(e: MouseEvent<HTMLDivElement>) {
     const target = e.currentTarget;
     setDraggable(true);
     console.log("start");
-    setpos({
-      ...pos,
-      y: e.clientY,
-      top: target.scrollTop,
-    });
-    // console.log(e.currentTarget.scrollTop())
-    // console.log(window.scrollY)
-    // target.style.transform = "translateY(0vh)";
+    // setpos({
+    //   ...pos,
+    //   y: e.clientY,
+    //   top: target.scrollTop,
+    // });
   }
   function dragging(e: MouseEvent<HTMLDivElement>) {
-    // const target = e.currentTarget;
-    // console.log("fd"+e.clientY);
     if (draggable) {
       const target = document.getElementsByClassName(
         "Drawer_container__MW58C"
       )[0] as HTMLDivElement;
 
-      // console.log(e.currentTarget)
-      // console.log(pos.top, pos.y);
       // console.log(window.innerHeight * e.clientY / 100 + 'vh')
       // console.log( 100* e.clientY/ window.innerHeight)
       // const y = (100 * mousePos) / window.innerHeight;
 
       const y = (100 * e.clientY) / window.innerHeight;
       setMousePos(y);
-      // 0
-      // 50 if
-      // 100
+      console.log(1 - mousePos / 100);
 
       target.style.transform = `translateY(${Math.round(mousePos)}vh)`;
-      target.style.transition = `initial`;
-      // console.log((mousePos % 100).toFixed(1));
-
-      // console.log(y)
-      // target.style.transform = `translateY(${Math.round(y)}vh)`;
-
-      // console.log(e.clientY % 100);
-
-      // target.style.transform = `translateY(${100*e.clientY / window.innerHeight}vh)`;
-      // const y = e.clientY % 100;
-      // console.log(target.style.transform)
-      // const matrix = new DOMMatrixReadOnly(target.style.transform);
-      // const newY = target.style.transform.replace(/[^\d.]/g, "");
-      // console.log("main"+mousePos);
-
-      // if (y > 50 && y < 70) {
-      //   target.style.transform = `translateY(50vh)`;
-      // }
-      // if (y < 50 && y > 25) {
-      //   target.style.transform = `translateY(50vh)`;
-      // }
-      // if (y < 25) {
-      //   // target.style.transform = `translateY(0vh)`;
-      // }
-      // if (y >= 70) {
-      //   target.style.transform = `translateY(100vh)`;
-      // }
-      // target.style.transform = `translateY(${e.clientY % 100}vh)`;
-
-      // if (y < 75 && y > 50) {
-      //   // target.style.transform = `translateY(50vh)`;
-      // } else if (y < 25) {
-      //   // target.style.transform = `translateY(100vh)`;
-      // }else{
-      //   // target.style.transform = `translateY(50vh)`;
-
-      // }
-      // if(y < 50){
-
-      //   // target.style.transform = `translateY(${e.clientY % 100}vh)`;
-      //   target.style.transform = `translateY(50vh)`;
-      // }else{
-
-      //   target.style.transform = `translateY(0vh)`;
-      // }
-      // target.style.transform = `translateY(${e.clientY / 100 }vh)`;
-      // console.log(target.);
+      target.style.transition = `unset`;
+      // console.log();
     }
-    // console.log(e.currentTarget.scrollTop())
-    // console.log(window.scrollY)
-    // target.style.transform = "translateY(0vh)";
   }
   function dragStop(e: MouseEvent<HTMLDivElement>) {
     // const target = e.currentTarget;
@@ -112,23 +64,19 @@ export default function Drawer({
     if (mousePos > 59 && mousePos < 100) {
       target.style.transform = `translateY(100vh)`;
       setopenDrawer(false);
-    } else if (mousePos < 50 || mousePos < 59) {
+      setMousePos(50);
+    } else if (mousePos < 59 || mousePos > 25) {
       target.style.transform = `translateY(50vh)`;
+      setMousePos(50);
     }
-    setMousePos(50);
-    // if(!openDrawer){
-    //   target.style.re
-
-    // }
-    // console.log(e.currentTarget.scrollTop())
-    // console.log(window.scrollY)
-    // target.style.transform = "translateY(0vh)";
+    if (mousePos < 25) {
+      target.style.transform = `translateY(0vh)`;
+      setMousePos(0);
+    }
   }
 
   useEffect(() => {
-    // console.log(draggable)
     function handleMouseUp() {
-      // console.log("mouseup");
       setDraggable(false);
     }
     document.body.addEventListener("mouseup", handleMouseUp);
@@ -136,11 +84,11 @@ export default function Drawer({
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [draggable]);
-
+  const drawer = `${s.drawer} ${openDrawer ? s.open : ""}`;
   return (
     <div
       style={{ userSelect: draggable ? "none" : "initial" }}
-      className={`${s.backDrop} ${openDrawer ? s.open : ""}`}
+      className={drawer}
       // className={`${openDrawer ? s.open : ""}`}
       // onMouseMove={(e) => {
       //   // console.log(e.clientY);
@@ -162,7 +110,6 @@ export default function Drawer({
       onMouseMove={dragging}
       // onTouchMove={dragging}
     >
-      {/* <div></div> */}
       <div
         style={{
           backgroundColor: `rgba(0 0 0 / ${
@@ -174,7 +121,7 @@ export default function Drawer({
           })`,
           transition: !draggable ? "all .3s ease-out" : "",
         }}
-        className={s.other}
+        className={s.backdrop}
       ></div>
       <div
         style={{
@@ -185,7 +132,22 @@ export default function Drawer({
         <div className={s.topBar} onMouseDown={dragStart}>
           <div className={s.phill}></div>
         </div>
-        {children}
+        {/* {children} */}
+        <div
+          className={s.content}
+          style={{
+            height: Math.max(Math.round(95 - mousePos), 45) + "vh",
+
+            transition: !draggable ? "all .3s ease-out" : "",
+            // transition: (props) =>
+            //   props.draggable ? "all .3s ease-out" : "",
+          }}
+        >
+          {React.cloneElement(children, { draggable })}
+        </div>
+        {/* {React.Children.map(children, (child) => {
+          return React.cloneElement(child, { draggable });
+        })} */}
       </div>
     </div>
   );
