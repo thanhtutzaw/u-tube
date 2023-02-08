@@ -1,7 +1,7 @@
 import { useState } from "react";
 import s from "@/styles/Home.module.css";
 
-export function PrimaryInput({ inputRef }) {
+export function PrimaryInput() {
   const [OpenCommentAction, setOpenCommentAction] = useState(false);
   // useEffect(() => {
   //   inputRef.current?.focus()
@@ -9,14 +9,14 @@ export function PrimaryInput({ inputRef }) {
 
   function handleCommentAction() {
     setOpenCommentAction((prev) => !prev);
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
+    // if (inputRef.current) {
+    //   inputRef.current.value = "";
+    // }
   }
   return (
     <div className={s.primaryInput}>
       <input
-        ref={inputRef}
+        // ref={inputRef}
         placeholder="Add comment"
         type="text"
         onFocus={() => {
