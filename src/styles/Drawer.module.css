@@ -1,5 +1,6 @@
 .drawer {
     height                      : 100vh;
+    height: -webkit-fill-available;
     overflow                    : hidden;
     /* opacity                  : 0;
     transition                  : opacity .3s ease-out; */
@@ -66,6 +67,7 @@
     overflow-y         : scroll;
     /* background-color: rgba(255, 145, 0, 0.945); */
     will-change        : height;
+    /* height:; */
 }
 
 .content:hover::-webkit-scrollbar-thumb {
