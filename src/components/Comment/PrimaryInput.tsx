@@ -1,9 +1,12 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import s from "@/styles/Home.module.css";
 
-export function PrimaryInput() {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+export function PrimaryInput({ inputRef }) {
   const [OpenCommentAction, setOpenCommentAction] = useState(false);
+  // useEffect(() => {
+  //   inputRef.current?.focus()
+  // }, [])
+
   function handleCommentAction() {
     setOpenCommentAction((prev) => !prev);
     if (inputRef.current) {

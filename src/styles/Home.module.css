@@ -1,5 +1,5 @@
 .main {
-  display               : flex;
+  /* display               : flex; */
   /* align-items        : center; */
   justify-content       : center;
   /* padding            : 1rem; */
@@ -179,6 +179,7 @@
   /* padding: 0.5rem 1rem; */
   /* padding: 1rem; */
   padding: 1rem;
+  border-bottom: 1px solid #c1bfbf;
 }
 
 .secondaryInput>input {
@@ -366,7 +367,9 @@
 
 .card {
   background  : rgba(var(--card-rgb), 0.1);
-  border      : 1px solid rgba(var(--card-border-rgb), 0.1);
+  background : white;
+  /* border      : 1px solid rgba(var(--card-border-rgb), 0.1); */
+  border      : 1px solid rgba(var(--card-border-rgb), 0.2);
   border-left : 0;
   border-right: 0;
 }

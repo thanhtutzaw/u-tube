@@ -99,10 +99,13 @@ ul {
   /* overflow-y  : scroll; */
 }
 
-li:last-child {
+/* li:last-child {
   background-color: red;
+} */
+video{
+  max-width: 500px;
+  width:100vw;
 }
-
 
 ::-webkit-scrollbar {
   width        : 0.5rem;
