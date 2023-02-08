@@ -1,10 +1,11 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import drawer from "@/styles/Drawer.module.css";
+// import drawer from "@/styles/Drawer.module.css";
 import { useState } from "react";
-import { PrimaryInput } from "@/components/PrimaryInput";
-import { Comment } from "@/components/Comment";
-import Drawer from "@/components/Drawer";
+// import { PrimaryInput } from "@/components/Comment/PrimaryInput";
+import { Item } from "@/components/Comment/Item";
+import { Comment, Drawer } from "@/components";
+// import { PrimaryInput } from "@/components/Comment/PrimaryInput";
 
 // const inter = Inter({ subsets: ["latin"] });
 // interface ICounter {
@@ -13,9 +14,7 @@ import Drawer from "@/components/Drawer";
 // }
 
 export default function Home() {
-  const [openDrawer, setopenDrawer] = useState(false);
-  const [mousePos, setMousePos] = useState(50);
-
+  const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <>
       <Head>
@@ -26,28 +25,21 @@ export default function Home() {
       </Head>
       <button
         style={{ padding: "1rem", zIndex: "300", position: "fixed" }}
-        onClick={() => setopenDrawer((prev) => !prev)}
+        onClick={() => setOpenDrawer((prev) => !prev)}
       >
         Open
       </button>
 
       <main className={styles.main}>
-        <Drawer
-          mousePos={mousePos}
-          setMousePos={setMousePos}
-          openDrawer={openDrawer}
-          setopenDrawer={setopenDrawer}
-        >
+        <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
+          {/* <PrimaryInput /> */}
+          {/* <PrimaryInput /> */}
 
-            
-            {/* {draggable ? <p>yes</p> : <p>no</p>} */}
-            <ul>
-              {/* <PrimaryInput /> */}
-              {Array.from(Array(10), (_, i) => (
-                <Comment key={i} />
-              ))}
-            </ul>
-          
+          <Comment>
+            {Array.from(Array(10), (_, i) => (
+              <Item key={i} />
+            ))}
+          </Comment>
         </Drawer>
       </main>
     </>

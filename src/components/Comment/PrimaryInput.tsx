@@ -1,11 +1,5 @@
-import { count } from "console";
-import { ElementRef, ReactNode, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import s from "@/styles/Home.module.css";
-// type ICounter ={
-//   // counter: number;
-//   children:ReactNode ,
-//   setCounter: React.Dispatch<React.SetStateAction<number>>;
-// } className={s.replyBtn}
 
 export function PrimaryInput() {
   const inputRef = useRef<HTMLInputElement | null>(null);

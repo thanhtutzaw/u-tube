@@ -7,21 +7,18 @@ import React, {
 } from "react";
 import s from "@/styles/Drawer.module.css";
 type DrawerProps = {
-  mousePos: number;
-  setMousePos: Function;
-  children: ReactElement;
-  // children: ReactNode;
+  // mousePos: number;
+  // setMousePos: Function;
+  // children: ReactElement;
+  children: ReactNode;
   openDrawer: boolean;
-  setopenDrawer: Function;
+  setOpenDrawer: Function;
 };
-export default function Drawer({
-  mousePos,
-  setMousePos,
-  children,
-  openDrawer,
-  setopenDrawer,
-}: DrawerProps) {
+export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   const [draggable, setDraggable] = useState(false);
+  const [mousePos, setMousePos] = useState(50);
+  // const open = "";
+  // const close = "";
   function dragStart(e: MouseEvent<HTMLDivElement>) {
     const target = e.currentTarget;
     setDraggable(true);
@@ -46,9 +43,9 @@ export default function Drawer({
       setMousePos(y);
       console.log(1 - mousePos / 100);
 
+      // target.styl
       target.style.transform = `translateY(${Math.round(mousePos)}vh)`;
       target.style.transition = `unset`;
-      // console.log();
     }
   }
   function dragStop(e: MouseEvent<HTMLDivElement>) {
@@ -63,7 +60,7 @@ export default function Drawer({
 
     if (mousePos > 59 && mousePos < 100) {
       target.style.transform = `translateY(100vh)`;
-      setopenDrawer(false);
+      setOpenDrawer(false);
       setMousePos(50);
     } else if (mousePos < 59 || mousePos > 25) {
       target.style.transform = `translateY(50vh)`;
@@ -85,11 +82,12 @@ export default function Drawer({
     };
   }, [draggable]);
   const drawer = `${s.drawer} ${openDrawer ? s.open : ""}`;
+  // const fillingHeight = ;
   return (
     <div
+    draggable="false"
       style={{ userSelect: draggable ? "none" : "initial" }}
       className={drawer}
-      // className={`${openDrawer ? s.open : ""}`}
       // onMouseMove={(e) => {
       //   // console.log(e.clientY);
       //   if (draggable) {
@@ -132,18 +130,16 @@ export default function Drawer({
         <div className={s.topBar} onMouseDown={dragStart}>
           <div className={s.phill}></div>
         </div>
-        {/* {children} */}
         <div
           className={s.content}
           style={{
             height: Math.max(Math.round(95 - mousePos), 45) + "vh",
-
-            transition: !draggable ? "all .3s ease-out" : "",
-            // transition: (props) =>
-            //   props.draggable ? "all .3s ease-out" : "",
+            transition: !draggable ? "all .3s ease" : "initial",
+            // transition: !draggable ? "all .3s ease" : "initial",
           }}
         >
-          {React.cloneElement(children, { draggable })}
+          {/* {React.cloneElement(children, { draggable })} */}
+          {children}
         </div>
         {/* {React.Children.map(children, (child) => {
           return React.cloneElement(child, { draggable });

@@ -1,24 +1,16 @@
-// import { count } from "console";
-import { createRef, useRef, useState } from "react";
+import { useState } from "react";
 import { SecondaryInput } from "./SecondaryInput";
 import s from "@/styles/Home.module.css";
-// type ICounter ={
-//   // counter: number;
-//   children:ReactNode ,
-//   setCounter: React.Dispatch<React.SetStateAction<number>>;
-// }
 
-export function Comment() {
+export function Item() {
   const [counter, setCounter] = useState<number>(0);
   const [openInput, setOpenInput] = useState(false);
   function handleInput() {
-    
     setOpenInput((prev) => !prev);
-    
   }
-  function focusInput(){
+  // function focusInput(){
 
-  }
+  // }
 
   return (
     <li>
@@ -36,20 +28,11 @@ export function Comment() {
         >
           👎
         </button>
-        <button
-          className={s.replyBtn}
-          onClick={handleInput}
-          // onClick={() => setCounter((prev) => prev - 10)}
-        >
+        <button className={s.replyBtn} onClick={handleInput}>
           Reply
         </button>
-        {/* <button onClick={setCounter((counter) => counter - 1)}>Dislike</button> */}
       </div>
-      {openInput && (
-        <SecondaryInput
-          handleInput={handleInput}
-        />
-      )}
+      {openInput && <SecondaryInput handleInput={handleInput} />}
     </li>
   );
 }
