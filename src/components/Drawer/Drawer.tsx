@@ -39,7 +39,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     setDraggable(true);
   }
   function dragging(e: MouseEvent<HTMLDivElement>) {
-    console.log(e)
+    // console.log(e);
     if (draggable) {
       const target = document.getElementsByClassName(
         "Drawer_container__MW58C"
@@ -47,7 +47,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
 
       const y = (100 * e.clientY) / window.innerHeight;
       setMousePos(y);
-      console.log(1 - mousePos / 100);
+      // console.log(1 - mousePos / 100);
 
       // target.styl
       target.style.transform = `translateY(${Math.round(mousePos)}vh)`;
@@ -60,11 +60,20 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       "Drawer_container__MW58C"
     )[0] as HTMLDivElement;
 
-    target.style.transition = `all .3s ease`;
-
+    target.style.transition = `transform .3s ease-in-out`;
+    
     if (mousePos > 59 && mousePos < 100) {
       target.style.transform = `translateY(100vh)`;
-      setOpenDrawer(false);
+      target.style.transition = `transform .3s ease-in-out`;
+      setTimeout(()=>{
+        setOpenDrawer(false);
+      } ,200)
+      // target.addEventListener('transitionend', ()=>{
+      //   if(draggable){
+      //     setOpenDrawer(false);
+      //   }
+      // })
+      // if (mousePos >90 && mousePos < 100) setOpenDrawer(false);
       setMousePos(50);
     } else if (mousePos < 59 || mousePos > 25) {
       target.style.transform = `translateY(50vh)`;
@@ -74,15 +83,21 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       target.style.transform = `translateY(0vh)`;
       setMousePos(0);
     }
+    // target.addEventListener("ontransitionend",() => {
+    //   setOpenDrawer(false)
+    // });
   }
 
   useEffect(() => {
     function handleMouseUp() {
       setDraggable(false);
+      console.log("up and mouse-up")
     }
     document.body.addEventListener("mouseup", handleMouseUp);
+    document.body.addEventListener("pointerUp", handleMouseUp);
     return () => {
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("pointerUp", handleMouseUp);
     };
   }, []);
   const drawer = `${s.drawer} ${openDrawer ? s.open : ""}`;
@@ -133,6 +148,11 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           transform: openDrawer ? "translateY(50vh)" : "translateY(100vh)",
         }}
         className={`${s.container} ${openDrawer ? s.open : ""}`}
+        // onTransitionEnd={()=>{
+        //   if(draggable === false && openDrawer === true){
+        //     setOpenDrawer(false);
+        //   }
+        // }}
       >
         <div
           className={s.topBar}
