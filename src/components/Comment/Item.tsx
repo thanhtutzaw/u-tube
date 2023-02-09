@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SecondaryInput } from "./SecondaryInput";
 import s from "@/styles/Home.module.css";
+import { FiThumbsUp , FiThumbsDown } from "react-icons/fi";
 
 export function Item() {
   const [counter, setCounter] = useState<number>(0);
@@ -19,14 +20,14 @@ export function Item() {
           className={s.likeBtn}
           onClick={() => setCounter((prev) => prev + 10)}
         >
-          👍
+          <FiThumbsUp></FiThumbsUp>
         </button>
         <h2>{counter}</h2>
         <button
           className={s.dislikeBtn}
           onClick={() => setCounter((prev) => prev - 10)}
         >
-          👎
+          <FiThumbsDown></FiThumbsDown>
         </button>
         <button className={s.replyBtn} onClick={handleInput}>
           Reply

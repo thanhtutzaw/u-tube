@@ -25,7 +25,7 @@ function Backdrop(props: BackdropProps) {
           // : "0"
         })`,
         opacity: props.openDrawer ? "1" : "0",
-        transition: !props.draggable ? "all .3s ease-out" : "",
+        transition: !props.draggable ? "all .3s ease-out width 0s" : "",
       }}
       className={s.backdrop}
     ></div>

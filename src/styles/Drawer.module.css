@@ -6,7 +6,8 @@
     transition                  : opacity .3s ease-out; */
     /* background-color         : rgba(0 0 0 / 0.5); */
     /* will-change              : opacity; */
-    height                      : 100vh;
+    
+    /* height                      : 100vh; */
     position                    : fixed;
     inset                       : 0;
     max-width                   : 500px;
@@ -43,7 +44,7 @@
     background-color : rgb(214, 214, 214);
     background-color : rgb(230, 230, 230);
     background-color : rgb(255, 255, 255);
-background-color: red;
+/* background-color: red; */
     border-top-left-radius : 1rem;
     border-top-right-radius : 1rem;
     /* transform                    : translateY(700px); */
