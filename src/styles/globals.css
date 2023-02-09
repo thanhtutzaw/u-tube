@@ -81,6 +81,11 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  font-size: 22px;
+}
+
+button {
+  font-size: 1rem;
 }
 
 a {
@@ -102,9 +107,9 @@ ul {
 /* li:last-child {
   background-color: red;
 } */
-video{
+video {
   max-width: 500px;
-  width:100vw;
+  width    : 100vw;
 }
 
 ::-webkit-scrollbar {

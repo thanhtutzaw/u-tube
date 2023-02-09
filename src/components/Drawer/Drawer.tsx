@@ -24,8 +24,11 @@ function Backdrop(props: BackdropProps) {
           // ? ".5"
           // : "0"
         })`,
+        backdropFilter: `blur(${
+          Math.min(2 - (props.mousePos * 2) / 100, 1) * 3 + "px"
+        })`,
         opacity: props.openDrawer ? "1" : "0",
-        transition: !props.draggable ? "all .3s ease-out width 0s" : "",
+        // transition: !props.draggable ? "all .3s ease-out width 0s" : "",
       }}
       className={s.backdrop}
     ></div>
@@ -35,7 +38,26 @@ function Backdrop(props: BackdropProps) {
 export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   const [draggable, setDraggable] = useState(false);
   const [mousePos, setMousePos] = useState(50);
+  const [fullscreen, setfullscreen] = useState(false);
+  function fullscreenHandle() {
+    setfullscreen((prev) => !prev);
+    const target = document.getElementsByClassName(
+      "Drawer_container__MW58C"
+    )[0] as HTMLDivElement;
+    // if (!fullscreen) {
+    target.style.transform = `translateY(0dvh)`;
+    setMousePos(0);
 
+    if (fullscreen) {
+      target.style.transform = `translateY(50dvh)`;
+      setMousePos(50);
+    }
+    // }
+    // if(mousePos !== 50){
+    //   target.style.transform = `translateY(100dvh)`;
+    //   setMousePos(100);
+    // }
+  }
   function dragStart(e: MouseEvent<HTMLDivElement>) {
     setDraggable(true);
   }
@@ -49,10 +71,8 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         "Home_main__EtNt2"
       )[0] as HTMLDivElement;
       // console.log(clientHeight.clientHeight);
-      // console.log(window.innerHeight);
       const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
       // const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
-      // console.log(y);
       // const y =
       //   (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
       //   window.innerHeight;
@@ -60,9 +80,9 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       // console.log(1 - mousePos / 100);
       target.style.transform = `translateY(${Math.round(mousePos)}dvh)`;
 
-      //  This makes jumping issue when scrolling from content Bottom 
+      //  This makes jumping issue when scrolling from content Bottom
       //(only solved in deskop still left in mobile) Not sure it happen when devtools open
-      
+
       // target.style.transition = `transform .05s ease`;
       target.style.transition = `unset`;
     }
@@ -76,19 +96,20 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       "Drawer_backdrop__C9y4o"
     )[0] as HTMLDivElement;
 
-    // target.style.transition = `transform .3s ease-in-out`;
-    target.style.transition = `all .3s ease`;
+    target.style.transition = `transform .3s ease-in-out`;
+    // target.style.transition = `all .3s ease`;
 
     // snapping
     if (mousePos > 59 && mousePos < 100) {
       target.style.transform = `translateY(100dvh)`;
       setMousePos(50);
       backdrop.style.opacity = "0";
-      // target.style.transition = `transform .3s ease-in-out`;
+      backdrop.style.backdropFilter = "blur(0)";
+      target.style.transition = `transform .3s ease-in-out`;
       // target.style.transition = `all .3s ease`;
-      // setTimeout(() => {
-      //   setOpenDrawer(false);
-      // }, 250);
+      setTimeout(() => {
+        setOpenDrawer(false);
+      }, 250);
     } else if (mousePos < 59 || mousePos > 25) {
       target.style.transform = `translateY(50dvh)`;
       backdrop.style.opacity = "1";
@@ -155,7 +176,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         className={`${s.container} ${openDrawer ? s.open : ""}`}
       >
         <div className={s.topBar} onPointerDown={dragStart}>
-          <div className={s.phill}></div>
+          <div onClick={fullscreenHandle} className={s.phill}></div>
         </div>
         {/* {730-673} */}
         {/* {window.innerHeight} */}
@@ -163,7 +184,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         <div
           className={s.content}
           style={{
-            height: Math.max(Math.round(95 - mousePos), 45) + "vh",
+            height: Math.max(Math.round(95 - mousePos), 45) + "dvh",
             // height:100* mousePos / 100 + "px",
             transition: !draggable ? "all .3s ease" : "initial",
             // transition: !draggable ? "all .05s ease" : "initial",
