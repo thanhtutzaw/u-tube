@@ -17,13 +17,14 @@ function Backdrop(props: BackdropProps) {
       // onClick={(e)=>console.log(e.target)}
       onClick={() => props.setOpenDrawer(false)}
       style={{
+        // backgroundColor: `rgba(0 0 0 / ${props.openDrawer ? ".5" : "0"})`,
         backgroundColor: `rgba(0 0 0 / ${
-          props.draggable
-            ? Math.min(1.02 - props.mousePos / 100, 0.5) //1.02 decrease the space
-            : props.openDrawer
-            ? ".5"
-            : "0"
+          props.draggable ? Math.min(1.02 - props.mousePos / 100, 0.5) : 0.5 //1.02 decrease the space
+          // : props.openDrawer
+          // ? ".5"
+          // : "0"
         })`,
+        opacity: props.openDrawer ? "1" : "0",
         transition: !props.draggable ? "all .3s ease-out" : "",
       }}
       className={s.backdrop}
@@ -48,20 +49,22 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         "Home_main__EtNt2"
       )[0] as HTMLDivElement;
       // console.log(clientHeight.clientHeight);
-      console.log(window.innerHeight);
+      // console.log(window.innerHeight);
       const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
-      console.log(y);
+      // const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
+      // console.log(y);
       // const y =
       //   (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
       //   window.innerHeight;
       setMousePos(y);
       // console.log(1 - mousePos / 100);
-      target.style.transform = `translateY(${Math.round(mousePos)}vh)`;
-      // target.style.setProperty(
-      //   "--mousepos",
-      //   `translateY(${Math.round(mousePos)}vh)`
-      // );
-      target.style.transition = `transform .05s ease`;
+      target.style.transform = `translateY(${Math.round(mousePos)}dvh)`;
+
+      //  This makes jumping issue when scrolling from content Bottom 
+      //(only solved in deskop still left in mobile) Not sure it happen when devtools open
+      
+      // target.style.transition = `transform .05s ease`;
+      target.style.transition = `unset`;
     }
   }
   function dragStop() {
@@ -69,83 +72,74 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     const target = document.getElementsByClassName(
       "Drawer_container__MW58C"
     )[0] as HTMLDivElement;
+    const backdrop = document.getElementsByClassName(
+      "Drawer_backdrop__C9y4o"
+    )[0] as HTMLDivElement;
 
-    target.style.transition = `transform .3s ease-in-out`;
+    // target.style.transition = `transform .3s ease-in-out`;
+    target.style.transition = `all .3s ease`;
 
     // snapping
     if (mousePos > 59 && mousePos < 100) {
       target.style.transform = `translateY(100dvh)`;
-      target.style.transition = `transform .3s ease-in-out`;
-      setTimeout(() => {
-        setOpenDrawer(false);
-      }, 250);
-      // target.addEventListener('transitionend', ()=>{
-      //   if(draggable){
-      //     setOpenDrawer(false);
-      //   }
-      // })
-      // if (mousePos >90 && mousePos < 100) setOpenDrawer(false);
       setMousePos(50);
+      backdrop.style.opacity = "0";
+      // target.style.transition = `transform .3s ease-in-out`;
+      // target.style.transition = `all .3s ease`;
+      // setTimeout(() => {
+      //   setOpenDrawer(false);
+      // }, 250);
     } else if (mousePos < 59 || mousePos > 25) {
       target.style.transform = `translateY(50dvh)`;
+      backdrop.style.opacity = "1";
       setMousePos(50);
     }
     if (mousePos < 25) {
       target.style.transform = `translateY(0dvh)`;
       setMousePos(0);
     }
-    // target.addEventListener("ontransitionend",() => {
-    //   setOpenDrawer(false)
-    // });
   }
 
   useEffect(() => {
     function handleMouseUp() {
       setDraggable(false);
-      console.log("up and mouse-up");
     }
     document.body.addEventListener("mouseup", handleMouseUp);
-    document.body.addEventListener("pointerUp", handleMouseUp);
     return () => {
       window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("pointerUp", handleMouseUp);
     };
-  }, []);
+  }, [draggable]);
+
+  // useEffect(() => {
+  //   function handleMouseUp() {
+  //     setDraggable(false);
+  //   }
+  //   document.body.addEventListener("mouseup", handleMouseUp);
+  //   document.body.addEventListener("pointerUp", handleMouseUp);
+  //   return () => {
+  //     window.removeEventListener("mouseup", handleMouseUp);
+  //     window.removeEventListener("pointerUp", handleMouseUp);
+  //   };
+  // }, []);
   const drawer = `${s.drawer} ${openDrawer ? s.open : ""}`;
-  const fillingHeight = Math.max(Math.round(95 - mousePos), 45) + "dvh";
+  // const fillingHeight = Math.max(Math.round(95 - mousePos), 45) + "dvh";
   return (
     <div
       draggable="false"
       style={{ userSelect: draggable ? "none" : "initial" }}
       className={drawer}
-      // onMouseMove={(e) => {
-      //   // console.log(e.clientY);
-      //   if (draggable) {
-      //     // setMousePos(e.clientY);
-      //     // console.log("main"+e.clientY)
-      //   }
-      // }}
       onPointerUp={() => {
         if (openDrawer) {
+          console.log("pointer up");
           dragStop();
         }
       }}
       onPointerCancel={() => {
         if (openDrawer) {
+          console.log("pointer cancel");
           dragStop();
         }
       }}
-      // onMouseUp={() => {
-      //   if (openDrawer) {
-      //     dragStop();
-      //   }
-      // }}
-      // onTouchStart={(e) => {
-      //   if (openDrawer) {
-      //     dragStop(e);
-      //   }
-      // }}
-      // onMouseMove={dragging}
       onPointerMove={dragging}
     >
       <Backdrop
@@ -159,17 +153,8 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           transform: openDrawer ? "translateY(50dvh)" : "translateY(100dvh)",
         }}
         className={`${s.container} ${openDrawer ? s.open : ""}`}
-        // onTransitionEnd={()=>{
-        //   if(draggable === false && openDrawer === true){
-        //     setOpenDrawer(false);
-        //   }
-        // }}
       >
-        <div
-          className={s.topBar}
-          // onMouseDown={dragStart}
-          onPointerDown={dragStart}
-        >
+        <div className={s.topBar} onPointerDown={dragStart}>
           <div className={s.phill}></div>
         </div>
         {/* {730-673} */}
@@ -178,9 +163,11 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         <div
           className={s.content}
           style={{
-            height: fillingHeight,
-            // transition: !draggable ? "all .3s ease" : "unset",
+            height: Math.max(Math.round(95 - mousePos), 45) + "vh",
+            // height:100* mousePos / 100 + "px",
             transition: !draggable ? "all .3s ease" : "initial",
+            // transition: !draggable ? "all .05s ease" : "initial",
+            // transition: !draggable ? "all .05s ease" : "unset",
           }}
         >
           {children}

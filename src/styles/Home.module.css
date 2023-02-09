@@ -244,6 +244,7 @@ height: 100dvh;
   padding              : 1rem 1.2rem;
   /* border-radius     : var(--border-radius); */
   background           : rgba(var(--card-rgb), 0);
+  background-color: orange !important;
   border               : 1px solid rgba(var(--card-border-rgb), 0);
   transition           : background 200ms, border 200ms;
   width                : 100vw;
@@ -407,10 +408,6 @@ height: 100dvh;
     margin-bottom        : 120px;
     max-width            : 320px;
     text-align           : center;
-  }
-
-  .card {
-    /* padding: 1rem 2.5rem; */
   }
 
   .card h2 {

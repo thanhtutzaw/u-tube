@@ -21,9 +21,9 @@
     pointer-events: auto;
 }
 
-.drawer.open .backdrop {
+/* .drawer.open .backdrop {
     opacity: 1;
-}
+} */
 
 .backdrop {
     height             : 100%;
@@ -43,7 +43,7 @@
     background-color : rgb(214, 214, 214);
     background-color : rgb(230, 230, 230);
     background-color : rgb(255, 255, 255);
-    /* border-radius                : 1rem; */
+background-color: red;
     border-top-left-radius : 1rem;
     border-top-right-radius : 1rem;
     /* transform                    : translateY(700px); */
@@ -68,7 +68,9 @@
     overflow-y         : scroll;
     /* background-color: rgba(255, 145, 0, 0.945); */
     will-change        : height;
+    height: 100%;
     /* height:; */
+    /* background-color: orange !important; */
 }
 
 .content:hover::-webkit-scrollbar-thumb {
