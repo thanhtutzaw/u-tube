@@ -44,10 +44,16 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       const target = document.getElementsByClassName(
         "Drawer_container__MW58C"
       )[0] as HTMLDivElement;
-
-      const y =
-        (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
-        window.innerHeight;
+      const clientHeight = document.getElementsByClassName(
+        "Home_main__EtNt2"
+      )[0] as HTMLDivElement;
+      // console.log(clientHeight.clientHeight);
+      console.log(window.innerHeight);
+      const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
+      console.log(y);
+      // const y =
+      //   (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
+      //   window.innerHeight;
       setMousePos(y);
       // console.log(1 - mousePos / 100);
       target.style.transform = `translateY(${Math.round(mousePos)}vh)`;
@@ -64,11 +70,11 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       "Drawer_container__MW58C"
     )[0] as HTMLDivElement;
 
-    target.style.transition = `transform .35s ease-in-out`;
+    target.style.transition = `transform .3s ease-in-out`;
 
-// snapping 
+    // snapping
     if (mousePos > 59 && mousePos < 100) {
-      target.style.transform = `translateY(100vh)`;
+      target.style.transform = `translateY(100dvh)`;
       target.style.transition = `transform .3s ease-in-out`;
       setTimeout(() => {
         setOpenDrawer(false);
@@ -81,11 +87,11 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       // if (mousePos >90 && mousePos < 100) setOpenDrawer(false);
       setMousePos(50);
     } else if (mousePos < 59 || mousePos > 25) {
-      target.style.transform = `translateY(50vh)`;
+      target.style.transform = `translateY(50dvh)`;
       setMousePos(50);
     }
     if (mousePos < 25) {
-      target.style.transform = `translateY(0vh)`;
+      target.style.transform = `translateY(0dvh)`;
       setMousePos(0);
     }
     // target.addEventListener("ontransitionend",() => {
@@ -106,7 +112,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     };
   }, []);
   const drawer = `${s.drawer} ${openDrawer ? s.open : ""}`;
-  const fillingHeight = Math.max(Math.round(95 - mousePos), 45) + "vh";
+  const fillingHeight = Math.max(Math.round(95 - mousePos), 45) + "dvh";
   return (
     <div
       draggable="false"
@@ -150,7 +156,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       />
       <div
         style={{
-          transform: openDrawer ? "translateY(50vh)" : "translateY(100vh)",
+          transform: openDrawer ? "translateY(50dvh)" : "translateY(100dvh)",
         }}
         className={`${s.container} ${openDrawer ? s.open : ""}`}
         // onTransitionEnd={()=>{
@@ -168,13 +174,13 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         </div>
         {/* {730-673} */}
         {/* {window.innerHeight} */}
-        {/* {Math.round(mousePos)} */}
+        {/* {self.innerHeight} */}
         <div
           className={s.content}
           style={{
             height: fillingHeight,
+            // transition: !draggable ? "all .3s ease" : "unset",
             transition: !draggable ? "all .3s ease" : "initial",
-            // transition: !draggable ? "all .3s ease" : "initial",
           }}
         >
           {children}
