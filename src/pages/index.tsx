@@ -28,7 +28,7 @@ export default function Home() {
         <video
           width="500"
           muted
-          // autoPlay={true}
+          autoPlay={true}
           controls
           title={
             'Music Playing "Evening Of Amsterdam (Offical Lyric Vedio)_Luizz " '
@@ -36,7 +36,7 @@ export default function Home() {
           ref={vid}
           loop
           onPlaying={(e) => {
-            // e.currentTarget.muted = false;
+            e.currentTarget.muted = false;
           }}
           src="download.mp4"
         ></video>
