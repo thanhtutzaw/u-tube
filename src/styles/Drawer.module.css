@@ -14,7 +14,7 @@
     width              : 100vw;
     margin             : 0 auto;
     pointer-events     : none;
-    touch-action       : none;
+    
     opacity            : 1;
     /* background-color: rgba(255, 0, 0, 0.3); */
 }
