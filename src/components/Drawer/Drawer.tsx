@@ -34,7 +34,8 @@ function Backdrop(props: BackdropProps) {
 
 export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   const [draggable, setDraggable] = useState(false);
-  const [mousePos, setMousePos] = useState(50);
+  const middleHeight = 40;
+  const [mousePos, setMousePos] = useState(middleHeight);
   const [fullscreen, setfullscreen] = useState(false);
   function toggleFullscreen() {
     setfullscreen((prev) => !prev);
@@ -45,8 +46,8 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     setMousePos(0);
 
     if (fullscreen) {
-      target.style.transform = `translateY(50dvh)`;
-      setMousePos(50);
+      target.style.transform = `translateY(${middleHeight}dvh)`;
+      setMousePos(middleHeight);
     }
   }
   function dragStart() {
@@ -57,9 +58,9 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       const target = document.getElementsByClassName(
         "Drawer_container__MW58C"
       )[0] as HTMLDivElement;
-      const clientHeight = document.getElementsByClassName(
-        "Home_main__EtNt2"
-      )[0] as HTMLDivElement;
+      // const clientHeight = document.getElementsByClassName(
+      //   "Home_main__EtNt2"
+      // )[0] as HTMLDivElement;
       const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
       // const y =
       //   (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
@@ -88,19 +89,19 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     // target.style.transition = `all .3s ease`;
 
     // Snapping
-    if (mousePos > 59 && mousePos < 100) {
+    if (mousePos > 49 && mousePos < 100) {
       target.style.transform = `translateY(100dvh)`;
-      setMousePos(50);
+      setMousePos(middleHeight);
       backdrop.style.opacity = "0";
       backdrop.style.backdropFilter = "blur(0)";
       target.style.transition = `transform .3s ease-in-out`;
       setTimeout(() => {
         setOpenDrawer(false);
       }, 250);
-    } else if (mousePos < 59 || mousePos > 25) {
-      target.style.transform = `translateY(50dvh)`;
+    } else if (mousePos < 49 || mousePos > 25) {
+      target.style.transform = `translateY(${middleHeight}dvh)`;
       backdrop.style.opacity = "1";
-      setMousePos(50);
+      setMousePos(middleHeight);
     }
     if (mousePos < 25) {
       target.style.transform = `translateY(0dvh)`;
@@ -145,7 +146,9 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       />
       <div
         style={{
-          transform: openDrawer ? "translateY(50dvh)" : "translateY(100dvh)",
+          transform: openDrawer
+            ? `translateY(${middleHeight}dvh)`
+            : `translateY(100dvh)`,
         }}
         className={`${s.container} ${openDrawer ? s.open : ""}`}
       >

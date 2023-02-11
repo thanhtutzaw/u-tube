@@ -110,6 +110,9 @@ ul {
 video {
   max-width: 500px;
   width    : 100vw;
+  height:40dvh;
+  background-color: black;
+  
 }
 
 ::-webkit-scrollbar {
