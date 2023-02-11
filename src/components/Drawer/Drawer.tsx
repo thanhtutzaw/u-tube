@@ -1,5 +1,6 @@
 import { MouseEvent, ReactNode, useEffect, useState } from "react";
 import s from "@/styles/Drawer.module.css";
+import { AiOutlineClose } from "react-icons/ai";
 type DrawerProps = {
   children: ReactNode;
   openDrawer: boolean;
@@ -266,25 +267,9 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           <div onClick={toggleFullscreen} className={s.phill}></div>
           <div className={s.topBarContent}>
             <h3>Comments</h3>
-            <button onClick={() => setOpenDrawer(false)}>Close</button>
-            {/* <button
-              style={{ display: "flex" }}
-              onClick={() => setOpenDrawer(false)}
-            >
-              Close
-            </button>
-            <button
-              style={{ display: "flex" }}
-              onClick={() => setOpenDrawer(false)}
-            >
-              Close
-            </button>
-            <button
-              style={{ display: "flex" }}
-              onClick={() => setOpenDrawer(false)}
-            >
-              Close
-            </button> */}
+            <button onClick={() => setOpenDrawer(false)}>
+              <AiOutlineClose />
+            </button>          
           </div>
         </div>
         <div

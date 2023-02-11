@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { Item } from "@/components/Comment/Item";
 import { Comment, Drawer } from "@/components";
 import { PrimaryInput } from "@/components/Comment/PrimaryInput";
-
+import {AiOutlineClose} from "react-icons/ai"
 // const inter = Inter({ subsets: ["latin"] });
 // interface ICounter {
 //   counter: number;
@@ -38,14 +38,15 @@ export default function Home() {
           <Video />
 
           <div className={styles.topContent}>
-            <button
+            <div
+            className={styles.showComment}
               onClick={() => {
                 setOpenDrawer((prev) => !prev);
                 // inputRef.current?.focus()
               }}
             >
               Add Comment
-            </button>
+            </div>
 
             <VideoLink />
             <VideoLink />
