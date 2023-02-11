@@ -44,8 +44,10 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     const target = document.getElementsByClassName(
       "Drawer_container__MW58C"
     )[0] as HTMLDivElement;
-    target.style.transform = `translateY(0dvh)`;
-    setMousePos(0);
+    target.style.transform = `translateY(-40dvh)`;
+    setMousePos(-40);
+    // target.style.transform = `translateY(0dvh)`;
+    // setMousePos(0);
 
     if (fullscreen) {
       target.style.transform = `translateY(${middleHeight}dvh)`;
@@ -92,23 +94,29 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     // target.style.transition = `all .3s ease`;
 
     // Snapping
-    if (mousePos > 49 && mousePos < 100) {
-      target.style.transform = `translateY(100dvh)`;
+    if (mousePos > 20 && mousePos < 30) {
+      // this is close
+      target.style.transform = `translateY(60dvh)`;
       setMousePos(middleHeight);
+      // setMousePos(middleHeight);
       backdrop.style.opacity = "0";
       // backdrop.style.backdropFilter = "blur(0)";
       target.style.transition = `transform .3s ease-in-out`;
       setTimeout(() => {
         setOpenDrawer(false);
       }, 250);
-    } else if (mousePos < 49 || mousePos > 25) {
+    } else if (mousePos < -20 || mousePos > -25) {
+      // this is open
       target.style.transform = `translateY(${middleHeight}dvh)`;
       backdrop.style.opacity = "1";
       setMousePos(middleHeight);
     }
-    if (mousePos < 25) {
-      target.style.transform = `translateY(0dvh)`;
-      setMousePos(0);
+    if (mousePos < -25) {
+      // this is FULLSCREEN
+      // target.style.transform = `translateY(0dvh)`;
+      // setMousePos(0);
+      target.style.transform = `translateY(-40dvh)`;
+      setMousePos(-40);
     }
   }
 
@@ -127,7 +135,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       "Home_main__EtNt2"
     )[0] as HTMLDivElement;
 
-    function dragging(e: MouseEvent<HTMLDivElement>) {
+    function dragging(e: PointerEvent) {
       if (draggable) {
         // const clientHeight = document.getElementsByClassName(
         //   "Home_main__EtNt2"
@@ -141,11 +149,17 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         // const y =
         //   (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
         //   window.innerHeight;
-        setMousePos(y);
-        container.style.transform = `translateY(${Math.max(
-          Math.round(mousePos),
-          0
-        )}dvh)`;
+        setMousePos(y - 40);
+        console.log(mousePos);
+        // console.log();
+        // console.log((100 * e.clientY) / window.innerHeight);
+        // console.log(y/2);
+        // console.log((100 * e.clientY) / window.innerHeight)/2;
+        container.style.transform = `translateY(${Math.round(mousePos)}dvh)`;
+        // container.style.transform = `translateY(${Math.max(
+        //   Math.round(mousePos),
+        //   0
+        // )}dvh)`;
 
         // ⚠️This makes jumping issue when scrolling from content Bottom
         //(only solved in deskop still left in mobile) Not sure it happen when devtools open
@@ -171,8 +185,9 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         // target.style.transition = `all .3s ease`;
 
         // Snapping
-        if (mousePos > 49 && mousePos < 100) {
-          target.style.transform = `translateY(100dvh)`;
+        if (mousePos > 25 && mousePos < 35) {
+          // target.style.transform = `translateY(100dvh)`;
+          target.style.transform = `translateY(60dvh)`;
           setMousePos(middleHeight);
           backdrop.style.opacity = "0";
           // backdrop.style.backdropFilter = "blur(0)";
@@ -180,14 +195,17 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           setTimeout(() => {
             setOpenDrawer(false);
           }, 250);
-        } else if (mousePos < 49 || mousePos > 25) {
+        } else if (mousePos < -20 || mousePos > -25) {
+          // this is open
           target.style.transform = `translateY(${middleHeight}dvh)`;
           backdrop.style.opacity = "1";
           setMousePos(middleHeight);
         }
-        if (mousePos < 25) {
-          target.style.transform = `translateY(0dvh)`;
-          setMousePos(0);
+        if (mousePos < -10) {
+          // target.style.transform = `translateY(0dvh)`;
+          target.style.transform = `translateY(-40dvh)`;
+          // setMousePos(0);
+          setMousePos(-40);
         }
       }
     }
