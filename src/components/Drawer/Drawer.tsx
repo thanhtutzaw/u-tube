@@ -138,6 +138,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
 
     function dragging(e: PointerEvent) {
       if (draggable) {
+        
         // const clientHeight = document.getElementsByClassName(
         //   "Home_main__EtNt2"
         // )[0] as HTMLDivElement;
@@ -210,23 +211,19 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         }
       }
     }
+if(openDrawer){
+  target.style.touchAction = 'none'
+}else{
+  target.style.touchAction = 'auto'
 
+}
     target.addEventListener("pointermove", dragging);
     target.addEventListener("pointerup", dragStop);
-    target.addEventListener("pointercancel", () => {
-      if (openDrawer) {
-        dragStop();
-        console.log("cancle");
-      }
-    });
+    target.addEventListener("pointercancel", dragStop);
     return () => {
       target.removeEventListener("pointermove", dragging);
       target.removeEventListener("pointerup", dragStop);
-      target.removeEventListener("pointercancel", () => {
-        if (openDrawer) {
-          dragStop();
-        }
-      });
+      target.removeEventListener("pointercancel", dragStop);
     };
   }, [draggable, mousePos, openDrawer, setOpenDrawer]);
 
