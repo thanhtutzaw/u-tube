@@ -50,6 +50,7 @@ sans-serif;
 /* border:1px solid rgb(0, 0, 0); */
 cursor: pointer;
 background-color: rgb(224, 224, 224);
+-webkit-tap-highlight-color: transparent;
 }
 .showComment:is(:active){
   background-color: rgb(197, 195, 195);
@@ -154,6 +155,7 @@ background-color: rgb(224, 224, 224);
 
 .primaryInput {
   display: flex;
+  font-size: 22px;
 }
 
 .commentActions {

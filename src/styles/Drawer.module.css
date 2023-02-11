@@ -14,13 +14,13 @@
     width              : 100vw;
     margin             : 0 auto;
     pointer-events     : none;
-    touch-action: none;
+    touch-action       : none;
     opacity            : 1;
-    background-color: rgba(255, 0, 0, 0.3);
+    /* background-color: rgba(255, 0, 0, 0.3); */
 }
 
 .drawer.open {
-    pointer-events: auto;
+    pointer-events : auto;
     /* touch-action: none; */
 }
 
@@ -90,25 +90,24 @@
 }
 
 .phill {
-    background-color   : rgb(201, 201, 201);
+    background-color   : rgb(199 199 199);
     /* width           : 30px; */
     width              : 50px;
     height             : 6px;
     border-radius      : 1rem;
     position           : absolute;
-    top                : 8px;
+    top                : 11px;
     /* left            : calc(50% - 25px); */
     left               : 50%;
     right              : 50%;
     transform          : translate(-50%);
     cursor             : pointer;
-    padding            : 4px;
+    /* padding         : 4px;
 }
 
 .topBar {
     /* background-color: rgb(245, 145, 145); */
-    min-height   : 5vh;
-    border-bottom: 1px solid #e2e2e2;
+    /* border-bottom      : 1px solid #e2e2e2; */
 }
 
 .topBarContent {
@@ -134,15 +133,24 @@
 .topBarContent h3 {
     flex: 1;
 }
+
 .topBarContent button {
-    display: flex;
+    display      : flex;
     border-radius: 50%;
-    padding:10px;
-    border:0;
-    background-color: rgb(226, 226, 226);
-    
+    padding      : 10px;
+    border       : 0;
+
+    font-size: 100%;
+
 }
-.topBarContent button:is(:focus){
+
+.topBarContent button:is(:focus) {
     /* background-color: rgb(235, 235, 235); */
     opacity: .7;
+}
+
+.topBarContent button:is(:active) {
+    /* background-color: rgb(235, 235, 235); */
+    /* border:3px solid red; */
+    background-color: rgb(192, 192, 192);
 }
