@@ -1,10 +1,8 @@
 .main {
-  /* display               : flex; */
-  /* align-items        : center; */
+  /* height                   : 100dvh; */
   justify-content          : center;
   /* padding               : 1rem; */
   /* min-height            : 100vh; */
-  height                   : 100dvh;
   /* height                : 100%; */
   /* min-height            : -webkit-fill-available; */
   background-color         : white;
@@ -12,6 +10,19 @@
   width                    : 100vw;
   margin                   : 0 auto;
   /* border                :5px solid red; */
+}
+.top{
+  /* border:3px solid blue; */
+}
+.bottom{
+  /* border:3px solid rgb(247, 0, 0); */
+}
+.player{
+  position: fixed;
+  top:0;
+}
+.topContent{
+  margin-top: 40dvh;
 }
 
 .likeBtn,

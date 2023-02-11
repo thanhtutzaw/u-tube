@@ -14,7 +14,6 @@ import { PrimaryInput } from "@/components/Comment/PrimaryInput";
 export default function Home() {
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const vid = useCallback((x: any) => (x.volume = 0.06), []);
   // const inputRef = useRef<HTMLInputElement | null>(null);
   return (
     <>
@@ -25,38 +24,67 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <video
-          width="500"
-          muted
-          autoPlay={true}
-          controls
-          title={
-            'Music Playing "Evening Of Amsterdam (Offical Lyric Vedio)_Luizz " '
-          }
-          ref={vid}
-          loop
-          onPlaying={(e) => {
-            e.currentTarget.muted = false;
-          }}
-          src="download.mp4"
-        ></video>
-        <button
-          onClick={() => {
-            setOpenDrawer((prev) => !prev);
-            // inputRef.current?.focus()
-          }}
-        >
-          Add Comment
-        </button>
-        <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
-          <PrimaryInput />
-          <Comment>
-            {Array.from(Array(10), (_, i) => (
-              <Item key={i} />
-            ))}
-          </Comment>
-        </Drawer>
+        <div className={styles.bottom}>
+          <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
+            <PrimaryInput />
+            <Comment>
+              {Array.from(Array(10), (_, i) => (
+                <Item key={i} />
+              ))}
+            </Comment>
+          </Drawer>
+        </div>
+        <div className={styles.top}>
+          <Video />
+
+          <div className={styles.topContent}>
+            <button
+              onClick={() => {
+                setOpenDrawer((prev) => !prev);
+                // inputRef.current?.focus()
+              }}
+            >
+              Add Comment
+            </button>
+
+            <VideoLink />
+            <VideoLink />
+            <VideoLink />
+            <VideoLink />
+          </div>
+        </div>
       </main>
     </>
+  );
+}
+// type VideoProps ={
+// vid:ref
+// }
+function Video() {
+  const vid = useCallback((x: any) => (x.volume = 0.06), []);
+  return (
+    <video
+    className={styles.player}
+      width="500"
+      muted // autoPlay={true}
+      controls
+      title={
+        'Music Playing "Evening Of Amsterdam (Offical Lyric Vedio)_Luizz " '
+      }
+      ref={vid}
+      loop
+      onPlaying={(e) => {
+        // e.currentTarget.muted = false;
+      }}
+      src="download.mp4"
+    ></video>
+  );
+}
+
+function VideoLink({}) {
+  return (
+    <a href="#">
+      <div className="videoCard">More Video</div>
+    </a>
   );
 }
