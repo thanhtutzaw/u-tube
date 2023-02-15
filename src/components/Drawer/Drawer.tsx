@@ -1,4 +1,12 @@
-import { MouseEvent, ReactNode, Ref, useEffect, useRef, useState } from "react";
+import {
+  MouseEvent,
+  ReactNode,
+  Ref,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import s from "@/styles/Drawer.module.css";
 import Close from "../../../assets/Close.jsx";
 type DrawerProps = {
@@ -88,12 +96,14 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [draggable]);
-  function getValue(e: MouseEvent | PointerEvent) {
-    const vhValue = (100 * e.clientY) / window.innerHeight;
-    const forFullScreen_Minus40vh = vhValue - 26.7;
-    return Math.round(Math.max(forFullScreen_Minus40vh, fullHeight));
-    // return Math.round((100 * e.clientY) / window.innerHeightfullHeight);
-  }
+  const getValue = useCallback(
+    (e: MouseEvent | PointerEvent) => {
+      const vhValue = (100 * e.clientY) / window.innerHeight;
+      const forFullScreen_Minus40vh = vhValue - 26.7;
+      return Math.round(Math.max(forFullScreen_Minus40vh, fullHeight)); // return Math.round((100 * e.clientY) / window.innerHeightfullHeight);
+    },
+    [fullHeight]
+  );
   function dragStart(e: MouseEvent) {
     setDraggable(true);
     setStartY(getValue(e));
@@ -117,13 +127,12 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         setMousePos(getValue(e));
         const dragFromMouseDownPosition = mousePos - startY;
         setnewPos(prev + dragFromMouseDownPosition);
-        // container.style.transform = `translateY(${mousePos - startY}dvh)`;
 
         container.style.transform = `translateY(${newPos}dvh)`;
 
         // ⚠️This makes shaking issue when scrolling from content Bottom
         //(only solved in deskop still left in mobile) Not sure it happen when devtools open
-        //Now it only happed when devtools opend. Problem solved. ⚠️
+        //Now it only happened when devtool is opened. Problem solved. ⚠️
 
         // target.style.transition = `transform .05s ease`;
         container.style.transition = `unset`;
@@ -131,35 +140,20 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     }
 
     function dragStop(e: PointerEvent) {
-      // const target = document.getElementsByClassName(
-      //   "Drawer_container__MW58C"
-      // )[0] as HTMLDivElement;
-
       if (openDrawer && draggable) {
         if (mousePos === 0 || !container) return;
         setPrev(newPos);
         setDraggable(false);
-        // console.log("dragStop", getValue(e));
-
         container.style.transition = `transform .3s ease-in-out`;
+
         // Snapping
         if (mousePos >= 30 && mousePos <= 60) {
           closeSnap(60);
-          console.log("snap close");
-        }
-        // else if (
-        //   (mousePos < 20 && mousePos > 0) ||
-        //   (mousePos > -25 && mousePos < 0)
-        // ) {
-        else if (mousePos < -20 || mousePos > -25) {
-          if (!container || !backdrop) return;
-          container.style.transform = `translateY(${0}dvh)`;
-          resetStates(0);
-          console.log("snap to middle");
+        } else if (mousePos < -20 || mousePos > -25) {
+          middleSnap();
         }
         if (mousePos <= -5) {
           fullSnap(fullHeight);
-          console.log("snap to full");
         }
       } else {
         resetStates(0);
@@ -170,20 +164,11 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         container.style.transform = `translateY(${y}dvh)`;
         resetStates(y);
       }
-
-      function openSnap(y: number) {
+      function middleSnap() {
         if (!container || !backdrop) return;
-        container.style.transform = `translateY(${y}dvh)`;
-        setMousePos(0);
-        setStartY(0);
-        setPrev(0);
-        setnewPos(0);
-        // if (!draggable) {
-        //   // resetStates(0);
-        //   console.log("in open snap !draggable")
-        //   setPrev(0);
-        //   // setnewPos(0)
-        // }
+        container.style.transform = `translateY(${0}dvh)`;
+        resetStates(0);
+        console.log("snap to middle");
         backdrop.style.opacity = "1";
       }
       function closeSnap(y: number) {
@@ -214,6 +199,8 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     backdrop,
     container,
     draggable,
+    fullHeight,
+    getValue,
     mousePos,
     newPos,
     openDrawer,
@@ -252,7 +239,6 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           <div className={s.topBarContent}>
             <h3>Comments</h3>
             <button onClick={() => setOpenDrawer(false)}>
-              {/* <AiOutlineClose /> */}
               <Close />
             </button>
           </div>
@@ -260,8 +246,10 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         <div
           className={s.content}
           style={{
-            // height: Math.round(90 - mousePos) + "dvh",
+            height:     61 + "dvh",
+            // height: Math.round(middleHeight+fullHeight) + "dvh",
 
+            // height: (95 - mousePos) + "dvh",
             // height: Math.max(Math.round(95 - mousePos), 45) + "dvh",
             // height:100* mousePos / 100 + "px",
             transition: !draggable ? "all .3s ease" : "initial",

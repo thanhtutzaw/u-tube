@@ -4,12 +4,6 @@ import { useCallback, useState } from "react";
 import { Item } from "@/components/Comment/Item";
 import { Comment, Drawer } from "@/components";
 import { PrimaryInput } from "@/components/Comment/PrimaryInput";
-import {AiOutlineClose} from "react-icons/ai"
-// const inter = Inter({ subsets: ["latin"] });
-// interface ICounter {
-//   counter: number;
-//   setCounter: () => void;
-// }
 
 export default function Home() {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -58,9 +52,7 @@ export default function Home() {
     </>
   );
 }
-// type VideoProps ={
-// vid:ref
-// }
+
 function Video() {
   const vid = useCallback((x: any) => (x.volume = 0.06), []);
   return (
