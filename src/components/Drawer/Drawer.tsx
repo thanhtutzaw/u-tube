@@ -1,6 +1,6 @@
-import { MouseEvent, ReactNode, useEffect, useState } from "react";
+import { MouseEvent, ReactNode, Ref, useEffect, useRef, useState } from "react";
 import s from "@/styles/Drawer.module.css";
-import { AiOutlineClose } from "react-icons/ai";
+import Close from "../../../assets/close";
 type DrawerProps = {
   children: ReactNode;
   openDrawer: boolean;
@@ -11,10 +11,12 @@ interface BackdropProps {
   mousePos: number;
   openDrawer: boolean;
   setOpenDrawer: Function;
+  backdropRef: Ref<HTMLDivElement>;
 }
 function Backdrop(props: BackdropProps) {
   return (
     <div
+      ref={props.backdropRef}
       // onClick={() => props.setOpenDrawer(false)}
       style={{
         backgroundColor: `rgba(0 0 0 / ${
@@ -37,90 +39,45 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   const [draggable, setDraggable] = useState(false);
   // const middleHeight = 40;
   const middleHeight = 0;
-  const [mousePos, setMousePos] = useState(middleHeight);
+  const [mousePos, setMousePos] = useState(0);
+  const [startY, setStartY] = useState(0);
+  const [prev, setPrev] = useState(0);
+  const [newPos, setnewPos] = useState(0);
   const [fullscreen, setfullscreen] = useState(false);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const backdrop = backdropRef.current;
+  // const backdrop = document.getElementsByClassName(
+  //   "Drawer_backdrop__C9y4o"
+  // )[0] as HTMLDivElement;
+  // const container = document.body.getElementsByClassName(
+  //   "Drawer_container__MW58C"
+  // )[0] as HTMLDivElement;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const container = containerRef.current;
+
+  function resetStates(value: number) {
+    setMousePos(value);
+    setStartY(value);
+    setPrev(value);
+    setnewPos(value);
+  }
+
   function toggleFullscreen() {
     setfullscreen((prev) => !prev);
-    console.log("toggle f ull screen");
     const target = document.getElementsByClassName(
       "Drawer_container__MW58C"
     )[0] as HTMLDivElement;
-    target.style.transform = `translateY(-40dvh)`;
-    setMousePos(-40);
-    // target.style.transform = `translateY(0dvh)`;
-    // setMousePos(0);
-
-    if (fullscreen) {
-      target.style.transform = `translateY(${middleHeight}dvh)`;
-      setMousePos(middleHeight);
-    }
-  }
-  function dragStart() {
-    setDraggable(true);
-    console.log("drag start");
-  }
-  function dragging(e: MouseEvent<HTMLDivElement>) {
-    if (draggable) {
-      const target = document.getElementsByClassName(
-        "Drawer_container__MW58C"
-      )[0] as HTMLDivElement;
-      // const clientHeight = document.getElementsByClassName(
-      //   "Home_main__EtNt2"
-      // )[0] as HTMLDivElement;
-      const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
-      // const y =
-      //   (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
-      //   window.innerHeight;
-      setMousePos(y);
-      target.style.transform = `translateY(${Math.round(mousePos)}dvh)`;
-
-      // ⚠️This makes jumping issue when scrolling from content Bottom
-      //(only solved in deskop still left in mobile) Not sure it happen when devtools open
-      //Now it only happed when devtools opend. Problem solved. ⚠️
-
-      // target.style.transition = `transform .05s ease`;
-      target.style.transition = `unset`;
-    }
-  }
-  function dragStop() {
     setDraggable(false);
-    const target = document.getElementsByClassName(
-      "Drawer_container__MW58C"
-    )[0] as HTMLDivElement;
-    const backdrop = document.getElementsByClassName(
-      "Drawer_backdrop__C9y4o"
-    )[0] as HTMLDivElement;
-
-    target.style.transition = `transform .3s ease-in-out`;
-    // target.style.transition = `all .3s ease`;
-
-    // Snapping
-    if (mousePos > 20 && mousePos < 30) {
-      // this is close
-      target.style.transform = `translateY(60dvh)`;
-      setMousePos(middleHeight);
+    target.style.transform = `translateY(-40dvh)`;
+    resetStates(-40);
+    if (fullscreen) {
+      snapMiddle(target);
+      resetStates(middleHeight);
+      console.log("setMiddle");
+      // target.style.transform = `translateY(${middleHeight}dvh)`;
       // setMousePos(middleHeight);
-      backdrop.style.opacity = "0";
-      // backdrop.style.backdropFilter = "blur(0)";
-      target.style.transition = `transform .3s ease-in-out`;
-      setTimeout(() => {
-        setOpenDrawer(false);
-      }, 250);
-    } else if (mousePos < -20 || mousePos > -25) {
-      // this is open
-      target.style.transform = `translateY(${middleHeight}dvh)`;
-      backdrop.style.opacity = "1";
-      setMousePos(middleHeight);
-    }
-    if (mousePos < -25) {
-      // this is FULLSCREEN
-      // target.style.transform = `translateY(0dvh)`;
-      // setMousePos(0);
-      target.style.transform = `translateY(-40dvh)`;
-      setMousePos(-40);
     }
   }
-
   useEffect(() => {
     function handleMouseUp() {
       setDraggable(false);
@@ -130,40 +87,40 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [draggable]);
-
+  function getValue(e: MouseEvent | PointerEvent) {
+    const vhValue = (100 * e.clientY) / window.innerHeight;
+    const forFullScreen_Minus40vh = vhValue - 40;
+    return Math.round(Math.max(forFullScreen_Minus40vh, -40));
+    // return Math.round((100 * e.clientY) / window.innerHeight-40);
+  }
+  function dragStart(e: MouseEvent) {
+    setDraggable(true);
+    setStartY(getValue(e));
+    setMousePos(getValue(e));
+    console.log("dragstart");
+    // if(!openDrawer && !draggable){
+    //   resetStates()
+    // }
+    // if(!openDrawer){
+    //   resetStates()
+    // }
+  }
   useEffect(() => {
     const target = document.getElementsByClassName(
       "Home_main__EtNt2"
     )[0] as HTMLDivElement;
 
     function dragging(e: PointerEvent) {
-      if (draggable) {
-        
-        // const clientHeight = document.getElementsByClassName(
-        //   "Home_main__EtNt2"
-        // )[0] as HTMLDivElement;
-        const container = document.getElementsByClassName(
-          "Drawer_container__MW58C"
-        )[0] as HTMLDivElement;
-        // const y = Math.round((100 * e.clientY) / e.currentTarget.clientHeight);
-        // const y = Math.round((100 * e.clientY) / target.clientHeight);
-        const y = Math.round((100 * e.clientY) / window.innerHeight);
-        // const y =
-        //   (100 * (window.innerHeight === 673 ? e.clientY - 50 : e.clientY)) /
-        //   window.innerHeight;
-        setMousePos(y - 40);
-        console.log(mousePos);
-        // console.log();
-        // console.log((100 * e.clientY) / window.innerHeight);
-        // console.log(y/2);
-        // console.log((100 * e.clientY) / window.innerHeight)/2;
-        container.style.transform = `translateY(${Math.round(mousePos)}dvh)`;
-        // container.style.transform = `translateY(${Math.max(
-        //   Math.round(mousePos),
-        //   0
-        // )}dvh)`;
+      // const getElement_transform_Value_With_Minus = +container.style.transform.replace(/[^-?\d.]/g, "");
+      if (draggable && container) {
+        setMousePos(getValue(e));
+        const dragFromMouseDownPosition = mousePos - startY;
+        setnewPos(prev + dragFromMouseDownPosition);
+        // container.style.transform = `translateY(${mousePos - startY}dvh)`;
 
-        // ⚠️This makes jumping issue when scrolling from content Bottom
+        container.style.transform = `translateY(${newPos}dvh)`;
+
+        // ⚠️This makes shaking issue when scrolling from content Bottom
         //(only solved in deskop still left in mobile) Not sure it happen when devtools open
         //Now it only happed when devtools opend. Problem solved. ⚠️
 
@@ -172,51 +129,78 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       }
     }
 
-    function dragStop() {
+    function dragStop(e: PointerEvent) {
+      // const target = document.getElementsByClassName(
+      //   "Drawer_container__MW58C"
+      // )[0] as HTMLDivElement;
+
       if (openDrawer && draggable) {
+        if (mousePos === 0 || !container) return;
+        setPrev(newPos);
         setDraggable(false);
-        console.log("dragStop");
-        const target = document.getElementsByClassName(
-          "Drawer_container__MW58C"
-        )[0] as HTMLDivElement;
-        const backdrop = document.getElementsByClassName(
-          "Drawer_backdrop__C9y4o"
-        )[0] as HTMLDivElement;
+        // console.log("dragStop", getValue(e));
 
-        target.style.transition = `transform .3s ease-in-out`;
-        // target.style.transition = `all .3s ease`;
-
+        container.style.transition = `transform .3s ease-in-out`;
         // Snapping
-        if (mousePos > 25 && mousePos < 35) {
-          // target.style.transform = `translateY(100dvh)`;
-          target.style.transform = `translateY(60dvh)`;
-          setMousePos(middleHeight);
-          backdrop.style.opacity = "0";
-          // backdrop.style.backdropFilter = "blur(0)";
-          target.style.transition = `transform .3s ease-in-out`;
-          setTimeout(() => {
-            setOpenDrawer(false);
-          }, 250);
-        } else if (mousePos < -20 || mousePos > -25) {
-          // this is open
-          target.style.transform = `translateY(${middleHeight}dvh)`;
-          backdrop.style.opacity = "1";
-          setMousePos(middleHeight);
+        if (mousePos >= 30 && mousePos <= 60) {
+          closeSnap(60);
+          console.log("snap close");
         }
-        if (mousePos < -10) {
-          // target.style.transform = `translateY(0dvh)`;
-          target.style.transform = `translateY(-40dvh)`;
-          // setMousePos(0);
-          setMousePos(-40);
+        // else if (
+        //   (mousePos < 20 && mousePos > 0) ||
+        //   (mousePos > -25 && mousePos < 0)
+        // ) {
+        else if (mousePos < -20 || mousePos > -25) {
+          if (!container || !backdrop) return;
+          container.style.transform = `translateY(${0}dvh)`;
+          resetStates(0);
+          console.log("snap to middle");
         }
+        if (mousePos <= -15) {
+          fullSnap(-40);
+          console.log("snap to full");
+        }
+      } else {
+        resetStates(0);
+      }
+
+      function fullSnap(y: number) {
+        if (!container) return;
+        container.style.transform = `translateY(${y}dvh)`;
+        resetStates(y);
+      }
+
+      function openSnap(y: number) {
+        if (!container || !backdrop) return;
+        container.style.transform = `translateY(${y}dvh)`;
+        setMousePos(0);
+        setStartY(0);
+        setPrev(0);
+        setnewPos(0);
+        // if (!draggable) {
+        //   // resetStates(0);
+        //   console.log("in open snap !draggable")
+        //   setPrev(0);
+        //   // setnewPos(0)
+        // }
+        backdrop.style.opacity = "1";
+      }
+      function closeSnap(y: number) {
+        if (!container || !backdrop) return;
+        container.style.transform = `translateY(${y}dvh)`;
+        // setMousePos(middleHeight);
+        resetStates(middleHeight);
+        backdrop.style.opacity = "0";
+        container.style.transition = `transform .3s ease-in-out`;
+        setTimeout(() => {
+          setOpenDrawer(false);
+        }, 250);
       }
     }
-if(openDrawer){
-  target.style.touchAction = 'none'
-}else{
-  target.style.touchAction = 'auto'
+    openDrawer
+      ? (target.style.touchAction = "none")
+      : (target.style.touchAction = "auto");
 
-}
     target.addEventListener("pointermove", dragging);
     target.addEventListener("pointerup", dragStop);
     target.addEventListener("pointercancel", dragStop);
@@ -225,7 +209,17 @@ if(openDrawer){
       target.removeEventListener("pointerup", dragStop);
       target.removeEventListener("pointercancel", dragStop);
     };
-  }, [draggable, mousePos, openDrawer, setOpenDrawer]);
+  }, [
+    backdrop,
+    container,
+    draggable,
+    mousePos,
+    newPos,
+    openDrawer,
+    prev,
+    setOpenDrawer,
+    startY,
+  ]);
 
   const drawerClass = `${s.drawer} ${openDrawer ? s.open : ""}`;
   // const fillingHeight = Math.max(Math.round(95 - mousePos), 45) + "dvh";
@@ -234,25 +228,17 @@ if(openDrawer){
       draggable="false"
       style={{ userSelect: draggable ? "none" : "initial" }}
       className={drawerClass}
-      // onPointerUp={() => {
-      //   if (openDrawer) {
-      //     dragStop();
-      //   }
-      // }}
-      // onPointerCancel={() => {
-      //   if (openDrawer) {
-      //     dragStop();
-      //   }
-      // }}
-      // onPointerMove={dragging}
     >
       <Backdrop
+        backdropRef={backdropRef}
         setOpenDrawer={setOpenDrawer}
         openDrawer={openDrawer}
         draggable={draggable}
         mousePos={mousePos}
       />
       <div
+        onPointerDown={dragStart}
+        ref={containerRef}
         style={{
           transform: openDrawer
             ? `translateY(${middleHeight}dvh)`
@@ -260,19 +246,21 @@ if(openDrawer){
         }}
         className={`${s.container} ${openDrawer ? s.open : ""}`}
       >
-        <div className={s.topBar} onPointerDown={dragStart}>
+        <div className={s.topBar}>
           <div onClick={toggleFullscreen} className={s.phill}></div>
           <div className={s.topBarContent}>
             <h3>Comments</h3>
             <button onClick={() => setOpenDrawer(false)}>
-              <AiOutlineClose />
-            </button>          
+              {/* <AiOutlineClose /> */}
+              <Close />
+            </button>
           </div>
         </div>
         <div
           className={s.content}
           style={{
-            height: Math.round(90 - mousePos) + "dvh",
+            // height: Math.round(90 - mousePos) + "dvh",
+
             // height: Math.max(Math.round(95 - mousePos), 45) + "dvh",
             // height:100* mousePos / 100 + "px",
             transition: !draggable ? "all .3s ease" : "initial",
@@ -287,4 +275,8 @@ if(openDrawer){
       </div>
     </div>
   );
+
+  function snapMiddle(target: HTMLDivElement) {
+    target.style.transform = `translateY(${middleHeight}dvh)`;
+  }
 }

@@ -26,7 +26,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.bottom}>
           <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
-            <PrimaryInput />
+            <PrimaryInput />  
             <Comment>
               {Array.from(Array(10), (_, i) => (
                 <Item key={i} />

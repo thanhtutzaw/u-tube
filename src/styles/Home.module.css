@@ -9,50 +9,47 @@
   max-width                : 500px;
   width                    : 100vw;
   margin                   : 0 auto;
-  
+
   /* border                :5px solid red; */
 }
-.top{
+
+.top {
   /* border:3px solid blue; */
 }
-.bottom{
+
+.bottom {
   /* border:3px solid rgb(247, 0, 0); */
 }
-.player{
+
+.player {
   position: fixed;
-  top:0;
+  top     : 0;
 }
-.topContent{
+
+.topContent {
   margin-top: 40dvh;
-  padding: 1rem 0;
+  padding   : 1rem 0;
 }
-.topContent > .showComment{
+
+.topContent>.showComment {
   /* min-width:450px; */
-  background-color: gray;
-  background-color: rgb(197, 195, 195);
-  background-color: transparent;
-  padding:2rem;
-  margin:0 10px;
-  /* margin:10px 30px; */
-  border-radius: 20px;
-  font-family : system-ui,
--apple-system,
-BlinkMacSystemFont,
-'Segoe UI',
-Roboto,
-Oxygen,
-Ubuntu,
-Cantarell,
-'Open Sans',
-'Helvetica Neue',
-sans-serif;
-/* border:3px solid; */
-/* border:1px solid rgb(0, 0, 0); */
-cursor: pointer;
-background-color: rgb(224, 224, 224);
--webkit-tap-highlight-color: transparent;
+  background-color           : gray;
+  background-color           : rgb(197, 195, 195);
+  background-color           : transparent;
+  padding                    : 2rem;
+  margin                     : 0 10px;
+  /* margin                  :10px 30px; */
+  border-radius              : 20px;
+  font-family                : var(--font-primary);
+  /* border                  :3px solid; */
+  /* border                  :1px solid rgb(0, 0, 0); */
+  cursor                     : pointer;
+  background-color           : rgb(224, 224, 224);
+  -webkit-tap-highlight-color: transparent;
+  color:black;
 }
-.showComment:is(:active){
+
+.showComment:is(:active) {
   background-color: rgb(197, 195, 195);
 }
 
@@ -154,7 +151,7 @@ background-color: rgb(224, 224, 224);
 }
 
 .primaryInput {
-  display: flex;
+  display  : flex;
   font-size: 22px;
 }
 
@@ -234,9 +231,10 @@ background-color: rgb(224, 224, 224);
   align-items  : center;
   /* font-size : 100%; */
 }
-.secondaryInput>button{
-  width:90px;
-  display: flex;
+
+.secondaryInput>button {
+  width          : 90px;
+  display        : flex;
   justify-content: center;
 }
 
@@ -314,18 +312,8 @@ background-color: rgb(224, 224, 224);
 }
 
 .card h2 {
-  min-width: 58px;
-  font-family: system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Open Sans',
-    'Helvetica Neue',
-    sans-serif;
+  min-width  : 58px;
+  font-family: var(--font-primary);
 }
 
 
@@ -335,7 +323,7 @@ background-color: rgb(224, 224, 224);
 }
 
 .card h2 {
-  font-weight  : 300;
+  font-weight     : 300;
   /* margin-bottom: 0.7rem; */
 }
 
