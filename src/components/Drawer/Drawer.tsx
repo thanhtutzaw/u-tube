@@ -1,6 +1,6 @@
 import { MouseEvent, ReactNode, Ref, useEffect, useRef, useState } from "react";
 import s from "@/styles/Drawer.module.css";
-import Close from "../../../assets/close";
+import Close from "../../../assets/Close.jsx";
 type DrawerProps = {
   children: ReactNode;
   openDrawer: boolean;
