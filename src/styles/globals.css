@@ -44,7 +44,7 @@
   --card-border-rgb   : 131, 134, 135;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb      : 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
@@ -71,7 +71,7 @@
     --card-rgb          : 100, 100, 100;
     --card-border-rgb   : 200, 200, 200;
   }
-}
+} */
 
 * {
   box-sizing   : border-box;
@@ -120,10 +120,16 @@ ul {
 
 video,
 .videoCard {
-  max-width       : 500px;
-  width           : 100vw;
-  height          : 40dvh;
-  background-color: black;
+  max-width          : 500px;
+  width              : 100vw;
+  /* height          : 40dvh; */
+  /* height          : 35.5dvh; */
+  background-color   : black;
+  /* background-color: rgb(235, 17, 17); */
+  height             : 26.7vh;
+
+  /* aspect-ratio: 16 / 9; */
+  /* height: calc(100vh / 4); */
 
 }
 

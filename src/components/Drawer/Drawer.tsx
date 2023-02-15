@@ -39,6 +39,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   const [draggable, setDraggable] = useState(false);
   // const middleHeight = 40;
   const middleHeight = 0;
+  const fullHeight = -26.7;
   const [mousePos, setMousePos] = useState(0);
   const [startY, setStartY] = useState(0);
   const [prev, setPrev] = useState(0);
@@ -68,8 +69,8 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       "Drawer_container__MW58C"
     )[0] as HTMLDivElement;
     setDraggable(false);
-    target.style.transform = `translateY(-40dvh)`;
-    resetStates(-40);
+    target.style.transform = `translateY(${fullHeight}dvh)`;
+    resetStates(fullHeight);
     if (fullscreen) {
       snapMiddle(target);
       resetStates(middleHeight);
@@ -89,9 +90,9 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   }, [draggable]);
   function getValue(e: MouseEvent | PointerEvent) {
     const vhValue = (100 * e.clientY) / window.innerHeight;
-    const forFullScreen_Minus40vh = vhValue - 40;
-    return Math.round(Math.max(forFullScreen_Minus40vh, -40));
-    // return Math.round((100 * e.clientY) / window.innerHeight-40);
+    const forFullScreen_Minus40vh = vhValue - 26.7;
+    return Math.round(Math.max(forFullScreen_Minus40vh, fullHeight));
+    // return Math.round((100 * e.clientY) / window.innerHeightfullHeight);
   }
   function dragStart(e: MouseEvent) {
     setDraggable(true);
@@ -156,8 +157,8 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           resetStates(0);
           console.log("snap to middle");
         }
-        if (mousePos <= -15) {
-          fullSnap(-40);
+        if (mousePos <= -5) {
+          fullSnap(fullHeight);
           console.log("snap to full");
         }
       } else {

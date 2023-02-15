@@ -24,7 +24,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.bottom}>
+        {/* <div className={styles.bottom}> */}
           <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
             <PrimaryInput />  
             <Comment>
@@ -33,8 +33,8 @@ export default function Home() {
               ))}
             </Comment>
           </Drawer>
-        </div>
-        <div className={styles.top}>
+        {/* </div> */}
+        {/* <div className={styles.top}> */}
           <Video />
 
           <div className={styles.topContent}>
@@ -53,7 +53,7 @@ export default function Home() {
             <VideoLink />
             <VideoLink />
           </div>
-        </div>
+        {/* </div> */}
       </main>
     </>
   );
