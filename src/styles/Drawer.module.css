@@ -61,6 +61,8 @@
     /* will-change                  : transform; */
     /* height                       : 100vh; */
     height                          : 100dvh;
+    /* touch-action: none; */
+
 
     /* transform: var(--mousepos); */
     /* overflow-y                   : scroll; */

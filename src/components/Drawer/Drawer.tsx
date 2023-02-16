@@ -115,7 +115,6 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         setnewPos(prev + dragFromMouseDownPosition);
 
         container.style.transform = `translateY(${newPos}dvh)`;
-
         // ⚠️This makes shaking issue when scrolling from content Bottom
         //(only solved in deskop still left in mobile) Not sure it happen when devtools open
         //Now it only happened when devtool is opened. Problem solved. ⚠️
@@ -133,12 +132,16 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         container.style.transition = `transform .3s ease-in-out`;
 
         // Snapping
-        if (mousePos >= 30 && mousePos <= 60) {
+        // console.log(newPos, mousePos);
+        // if (mousePos >= 30 && mousePos <= 60) {
+        if (newPos >= 15 && newPos <= 60) {
           closeSnap(60);
-        } else if (mousePos < -20 || mousePos > -25) {
+        } else if ((newPos > -20 && newPos < 0) || newPos <= 15) {
+          console.log("middle");
+          // else if (mousePos < -20 || mousePos > -25) {
           middleSnap();
         }
-        if (mousePos <= -5) {
+        if (newPos <= -12) {
           fullSnap(fullHeight);
         }
       } else {
@@ -230,9 +233,24 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           </div>
         </div>
         <div
+          onPointerDown={(e) => {
+            // setDraggable(true);
+            // console.log(e.currentTarget.scrollTop);
+            // console.log(e.currentTarget.scrollTop)
+            console.log(e.currentTarget.scrollTop);
+            if(e.currentTarget.scrollTop === 0){
+              // setDraggable(true)
+              // e.currentTarget.style.pointerEvents = 'none'
+              // e.currentTarget.style.pointerEvents = 'none'
+              // e.currentTarget.style.overscrollBehavior = 'none'
+            }else{
+              // e.currentTarget.style.overscrollBehavior = 'auto'
+              // setDraggable(false)
+            }
+          }}
           className={s.content}
           style={{
-            height: 61-newPos  + "dvh",
+            height: 61 - newPos + "dvh",
             // height: 61  + "dvh",
             // height: Math.round(middleHeight+fullHeight) + "dvh",
 
