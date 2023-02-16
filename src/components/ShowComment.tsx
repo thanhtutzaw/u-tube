@@ -1,9 +1,9 @@
-import styles from "@/styles/Home.module.css";
+import s from "@/styles/Home.module.css";
 
 export function ShowComment({ setOpenDrawer }: any) {
     return (
         <div
-            className={styles.showComment}
+            className={s.showComment}
             onClick={() => {
                 setOpenDrawer((prev: any) => !prev); // inputRef.current?.focus()
             }}

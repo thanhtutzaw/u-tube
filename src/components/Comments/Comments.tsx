@@ -1,11 +1,11 @@
-import { PropsWithChildren } from "react";
-import { Comment } from "./Comment";
+import { Item } from "./Comment";
 
 export default function Comments() {
-    // export default function Comments({ children }: PropsWithChildren) {
     return (
         <ul>
-            <Comment />
+            {Array.from(Array(10), (_, i) => (
+                <Item key={i} />
+            ))}
         </ul>
     );
 }

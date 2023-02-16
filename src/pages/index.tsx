@@ -10,7 +10,6 @@ import Comments from "@/components/Comments/Comments";
 
 export default function Home() {
     const [openDrawer, setOpenDrawer] = useState(false);
-
     // const inputRef = useRef<HTMLInputElement | null>(null);
     return (
         <>
@@ -23,6 +22,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
             <main className={styles.main}>
                 <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
                     <PrimaryInput />
