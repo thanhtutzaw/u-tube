@@ -28,10 +28,9 @@ function Backdrop(props: BackdropProps) {
       // onClick={() => props.setOpenDrawer(false)}
       style={{
         backgroundColor: `rgba(0 0 0 / ${
-          props.draggable ? Math.min(1.02 - props.mousePos / 100, 0.5) : 0.5 //1.02 decrease the space
-          // : props.openDrawer
-          // ? ".5"
-          // : "0"
+          props.draggable ? Math.min(0.6 - props.mousePos / 100, 0.5) : 0.5
+          // props.draggable ? Math.min(1.02 - props.mousePos / 100, 0.5) : 0.5
+          //1.02 decrease the space
         })`,
         // backdropFilter: `blur(${
         //   Math.min(1.5 - (props.mousePos * 2) / 100, 1) * 3 + "px"
@@ -55,12 +54,6 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   const [fullscreen, setfullscreen] = useState(false);
   const backdropRef = useRef<HTMLDivElement>(null);
   const backdrop = backdropRef.current;
-  // const backdrop = document.getElementsByClassName(
-  //   "Drawer_backdrop__C9y4o"
-  // )[0] as HTMLDivElement;
-  // const container = document.body.getElementsByClassName(
-  //   "Drawer_container__MW58C"
-  // )[0] as HTMLDivElement;
   const containerRef = useRef<HTMLDivElement>(null);
   const container = containerRef.current;
 
@@ -80,11 +73,10 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     target.style.transform = `translateY(${fullHeight}dvh)`;
     resetStates(fullHeight);
     if (fullscreen) {
-      snapMiddle(target);
+      target.style.transform = `translateY(${middleHeight}dvh)`;
       resetStates(middleHeight);
       console.log("setMiddle");
       // target.style.transform = `translateY(${middleHeight}dvh)`;
-      // setMousePos(middleHeight);
     }
   }
   useEffect(() => {
@@ -109,12 +101,6 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     setStartY(getValue(e));
     setMousePos(getValue(e));
     console.log("dragstart");
-    // if(!openDrawer && !draggable){
-    //   resetStates()
-    // }
-    // if(!openDrawer){
-    //   resetStates()
-    // }
   }
   useEffect(() => {
     const target = document.getElementsByClassName(
@@ -246,7 +232,8 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         <div
           className={s.content}
           style={{
-            height:     61 + "dvh",
+            height: 61-newPos  + "dvh",
+            // height: 61  + "dvh",
             // height: Math.round(middleHeight+fullHeight) + "dvh",
 
             // height: (95 - mousePos) + "dvh",
@@ -264,8 +251,4 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       </div>
     </div>
   );
-
-  function snapMiddle(target: HTMLDivElement) {
-    target.style.transform = `translateY(${middleHeight}dvh)`;
-  }
 }
