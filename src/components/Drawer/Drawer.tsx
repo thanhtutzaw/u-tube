@@ -56,6 +56,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
   const backdrop = backdropRef.current;
   const containerRef = useRef<HTMLDivElement>(null);
   const container = containerRef.current;
+  // const [overflow, setoverflow] = useState("initial");
 
   function resetStates(value: number) {
     setMousePos(value);
@@ -75,24 +76,69 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     if (fullscreen) {
       target.style.transform = `translateY(${middleHeight}dvh)`;
       resetStates(middleHeight);
-      console.log("setMiddle");
+      // console.log("setMiddle");
       // target.style.transform = `translateY(${middleHeight}dvh)`;
     }
   }
   useEffect(() => {
     function handleMouseUp() {
-      setDraggable(false);
+      if (openDrawer && draggable) {
+        setDraggable(false);
+        if (newPos >= 15 && newPos <= 60) {
+          closeSnap(60);
+        } else if ((newPos > -20 && newPos < 0) || newPos <= 15) {
+          // else if (mousePos < -20 || mousePos > -25) {
+          middleSnap();
+        }
+        if (newPos <= -12) {
+          fullSnap(fullHeight);
+        }
+      }
     }
+    function fullSnap(y: number) {
+      if (!container) return;
+      container.style.transform = `translateY(${y}dvh)`;
+      resetStates(y);
+    }
+    function middleSnap() {
+      if (!container || !backdrop) return;
+      container.style.transform = `translateY(${0}dvh)`;
+      resetStates(0);
+      backdrop.style.opacity = "1";
+    }
+    function closeSnap(y: number) {
+      if (!container || !backdrop) return;
+      container.style.transform = `translateY(${y}dvh)`;
+      // setMousePos(middleHeight);
+      resetStates(middleHeight);
+      backdrop.style.opacity = "0";
+      container.style.transition = `transform .3s ease-in-out`;
+      setTimeout(() => {
+        setOpenDrawer(false);
+      }, 250);
+    }
+    window.addEventListener("pointerup", handleMouseUp);
     document.body.addEventListener("mouseup", handleMouseUp);
     return () => {
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("pointerup", handleMouseUp);
+      document.body.removeEventListener("mouseup", handleMouseUp);
+      // window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [draggable]);
+  }, [
+    backdrop,
+    container,
+    draggable,
+    fullHeight,
+    newPos,
+    openDrawer,
+    setOpenDrawer,
+  ]);
   const getValue = useCallback(
     (e: MouseEvent | PointerEvent) => {
       const vhValue = (100 * e.clientY) / window.innerHeight;
       const forFullScreen_Minus40vh = vhValue - 26.7;
-      return Math.round(Math.max(forFullScreen_Minus40vh, fullHeight)); // return Math.round((100 * e.clientY) / window.innerHeightfullHeight);
+      return Math.round(Math.max(forFullScreen_Minus40vh, fullHeight));
+      // return Math.round((100 * e.clientY) / window.innerHeightfullHeight);
     },
     [fullHeight]
   );
@@ -100,12 +146,17 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     setDraggable(true);
     setStartY(getValue(e));
     setMousePos(getValue(e));
-    console.log("dragstart");
   }
   useEffect(() => {
     const target = document.getElementsByClassName(
       "Home_main__EtNt2"
     )[0] as HTMLDivElement;
+    // if(openDrawer){
+    //   document.body.style.overflow = 'hidden'
+    // }else{
+    //   document.body.style.overflow = 'initial'
+
+    // }
 
     function dragging(e: PointerEvent) {
       // const getElement_transform_Value_With_Minus = +container.style.transform.replace(/[^-?\d.]/g, "");
@@ -114,13 +165,17 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         const dragFromMouseDownPosition = mousePos - startY;
         setnewPos(prev + dragFromMouseDownPosition);
 
-        container.style.transform = `translateY(${newPos}dvh)`;
+        container.style.transform = `translateY(${Math.max(
+          Math.min(newPos, 100),
+          fullHeight
+        )}dvh)`;
         // ⚠️This makes shaking issue when scrolling from content Bottom
         //(only solved in deskop still left in mobile) Not sure it happen when devtools open
         //Now it only happened when devtool is opened. Problem solved. ⚠️
 
         // target.style.transition = `transform .05s ease`;
         container.style.transition = `unset`;
+        console.log(newPos);
       }
     }
 
@@ -130,14 +185,12 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         setPrev(newPos);
         setDraggable(false);
         container.style.transition = `transform .3s ease-in-out`;
-
         // Snapping
         // console.log(newPos, mousePos);
         // if (mousePos >= 30 && mousePos <= 60) {
         if (newPos >= 15 && newPos <= 60) {
           closeSnap(60);
         } else if ((newPos > -20 && newPos < 0) || newPos <= 15) {
-          console.log("middle");
           // else if (mousePos < -20 || mousePos > -25) {
           middleSnap();
         }
@@ -157,7 +210,6 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         if (!container || !backdrop) return;
         container.style.transform = `translateY(${0}dvh)`;
         resetStates(0);
-        console.log("snap to middle");
         backdrop.style.opacity = "1";
       }
       function closeSnap(y: number) {
@@ -233,24 +285,12 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
           </div>
         </div>
         <div
-          onPointerDown={(e) => {
-            // setDraggable(true);
-            // console.log(e.currentTarget.scrollTop);
-            // console.log(e.currentTarget.scrollTop)
-            console.log(e.currentTarget.scrollTop);
-            if(e.currentTarget.scrollTop === 0){
-              // setDraggable(true)
-              // e.currentTarget.style.pointerEvents = 'none'
-              // e.currentTarget.style.pointerEvents = 'none'
-              // e.currentTarget.style.overscrollBehavior = 'none'
-            }else{
-              // e.currentTarget.style.overscrollBehavior = 'auto'
-              // setDraggable(false)
-            }
-          }}
           className={s.content}
           style={{
             height: 61 - newPos + "dvh",
+            // overflow:draggable && newPos > 0?'initial' : 'auto',
+            // overflow: overflow,
+
             // height: 61  + "dvh",
             // height: Math.round(middleHeight+fullHeight) + "dvh",
 
