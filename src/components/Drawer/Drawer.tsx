@@ -224,6 +224,12 @@ export const Drawer = ({
                     </div>
                 </div>
                 <div
+                // onPointerDown={(e)=>{
+                //     // console.log("down")
+                //     e.stopPropagation();
+                //     e.preventDefault();
+                //     e.currentTarget.style.touchAction='none'
+                // }}
                     className={s.content}
                     style={{
                         height: 61 - newPos + "dvh",
