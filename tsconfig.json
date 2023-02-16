@@ -20,6 +20,7 @@
       "@assets/*": ["./src/assets/*"]
     }
   },
+  // "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/Drawer/Backdrop.tsx"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

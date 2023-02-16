@@ -9,42 +9,25 @@ import {
 } from "react";
 import s from "@/styles/Drawer.module.css";
 import Close from "../../../assets/Close.jsx";
+import Backdrop from "./Backdrop";
 type DrawerProps = {
   children: ReactNode;
   openDrawer: boolean;
   setOpenDrawer: Function;
 };
-interface BackdropProps {
+export interface BackdropProps {
   draggable: boolean;
   mousePos: number;
   openDrawer: boolean;
   setOpenDrawer: Function;
   backdropRef: Ref<HTMLDivElement>;
 }
-function Backdrop(props: BackdropProps) {
-  return (
-    <div
-      ref={props.backdropRef}
-      // onClick={() => props.setOpenDrawer(false)}
-      style={{
-        backgroundColor: `rgba(0 0 0 / ${
-          props.draggable ? Math.min(0.6 - props.mousePos / 100, 0.5) : 0.5
-          // props.draggable ? Math.min(1.02 - props.mousePos / 100, 0.5) : 0.5
-          //1.02 decrease the space
-        })`,
-        // backdropFilter: `blur(${
-        //   Math.min(1.5 - (props.mousePos * 2) / 100, 1) * 3 + "px"
-        // })`,
-        opacity: props.openDrawer ? "1" : "0",
-      }}
-      className={s.backdrop}
-    ></div>
-  );
-}
-
-export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
+export const Drawer = ({
+  children,
+  openDrawer,
+  setOpenDrawer,
+}: DrawerProps) => {
   const [draggable, setDraggable] = useState(false);
-  // const middleHeight = 40;
   const middleHeight = 0;
   const fullHeight = -26.7;
   const [mousePos, setMousePos] = useState(0);
@@ -67,72 +50,15 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
 
   function toggleFullscreen() {
     setfullscreen((prev) => !prev);
-    const target = document.getElementsByClassName(
-      "Drawer_container__MW58C"
-    )[0] as HTMLDivElement;
+    if (!container) return;
     setDraggable(false);
-    target.style.transform = `translateY(${fullHeight}dvh)`;
+    container.style.transform = `translateY(${fullHeight}dvh)`;
     resetStates(fullHeight);
     if (fullscreen) {
-      target.style.transform = `translateY(${middleHeight}dvh)`;
+      container.style.transform = `translateY(${middleHeight}dvh)`;
       resetStates(middleHeight);
-      // console.log("setMiddle");
-      // target.style.transform = `translateY(${middleHeight}dvh)`;
     }
   }
-  useEffect(() => {
-    function handleMouseUp() {
-      if (openDrawer && draggable) {
-        setDraggable(false);
-        if (newPos >= 15 && newPos <= 60) {
-          closeSnap(60);
-        } else if ((newPos > -20 && newPos < 0) || newPos <= 15) {
-          // else if (mousePos < -20 || mousePos > -25) {
-          middleSnap();
-        }
-        if (newPos <= -12) {
-          fullSnap(fullHeight);
-        }
-      }
-    }
-    function fullSnap(y: number) {
-      if (!container) return;
-      container.style.transform = `translateY(${y}dvh)`;
-      resetStates(y);
-    }
-    function middleSnap() {
-      if (!container || !backdrop) return;
-      container.style.transform = `translateY(${0}dvh)`;
-      resetStates(0);
-      backdrop.style.opacity = "1";
-    }
-    function closeSnap(y: number) {
-      if (!container || !backdrop) return;
-      container.style.transform = `translateY(${y}dvh)`;
-      // setMousePos(middleHeight);
-      resetStates(middleHeight);
-      backdrop.style.opacity = "0";
-      container.style.transition = `transform .3s ease-in-out`;
-      setTimeout(() => {
-        setOpenDrawer(false);
-      }, 250);
-    }
-    window.addEventListener("pointerup", handleMouseUp);
-    document.body.addEventListener("mouseup", handleMouseUp);
-    return () => {
-      window.removeEventListener("pointerup", handleMouseUp);
-      document.body.removeEventListener("mouseup", handleMouseUp);
-      // window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [
-    backdrop,
-    container,
-    draggable,
-    fullHeight,
-    newPos,
-    openDrawer,
-    setOpenDrawer,
-  ]);
   const getValue = useCallback(
     (e: MouseEvent | PointerEvent) => {
       const vhValue = (100 * e.clientY) / window.innerHeight;
@@ -148,16 +74,9 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
     setMousePos(getValue(e));
   }
   useEffect(() => {
-    const target = document.getElementsByClassName(
+    const main = document.getElementsByClassName(
       "Home_main__EtNt2"
     )[0] as HTMLDivElement;
-    // if(openDrawer){
-    //   document.body.style.overflow = 'hidden'
-    // }else{
-    //   document.body.style.overflow = 'initial'
-
-    // }
-
     function dragging(e: PointerEvent) {
       // const getElement_transform_Value_With_Minus = +container.style.transform.replace(/[^-?\d.]/g, "");
       if (draggable && container) {
@@ -200,41 +119,61 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
       } else {
         resetStates(0);
       }
+    }
 
-      function fullSnap(y: number) {
-        if (!container) return;
-        container.style.transform = `translateY(${y}dvh)`;
-        resetStates(y);
-      }
-      function middleSnap() {
-        if (!container || !backdrop) return;
-        container.style.transform = `translateY(${0}dvh)`;
-        resetStates(0);
-        backdrop.style.opacity = "1";
-      }
-      function closeSnap(y: number) {
-        if (!container || !backdrop) return;
-        container.style.transform = `translateY(${y}dvh)`;
-        // setMousePos(middleHeight);
-        resetStates(middleHeight);
-        backdrop.style.opacity = "0";
-        container.style.transition = `transform .3s ease-in-out`;
-        setTimeout(() => {
-          setOpenDrawer(false);
-        }, 250);
+    function fullSnap(y: number) {
+      if (!container) return;
+      container.style.transform = `translateY(${y}dvh)`;
+      resetStates(y);
+    }
+    function middleSnap() {
+      if (!container || !backdrop) return;
+      container.style.transform = `translateY(${0}dvh)`;
+      resetStates(0);
+      backdrop.style.opacity = "1";
+    }
+    function closeSnap(y: number) {
+      if (!container || !backdrop) return;
+      container.style.transform = `translateY(${y}dvh)`;
+      // setMousePos(middleHeight);
+      resetStates(middleHeight);
+      backdrop.style.opacity = "0";
+      container.style.transition = `transform .3s ease-in-out`;
+      setTimeout(() => {
+        setOpenDrawer(false);
+      }, 250);
+    }
+
+    openDrawer
+      ? (main.style.touchAction = "none")
+      : (main.style.touchAction = "auto");
+    function handleWindowEvent() {
+      if (openDrawer && draggable) {
+        setDraggable(false);
+        if (newPos >= 15 && newPos <= 60) {
+          closeSnap(60);
+        } else if ((newPos > -20 && newPos < 0) || newPos <= 15) {
+          middleSnap();
+        }
+        if (newPos <= -12) {
+          fullSnap(fullHeight);
+        }
       }
     }
-    openDrawer
-      ? (target.style.touchAction = "none")
-      : (target.style.touchAction = "auto");
 
-    target.addEventListener("pointermove", dragging);
-    target.addEventListener("pointerup", dragStop);
-    target.addEventListener("pointercancel", dragStop);
+    main.addEventListener("pointermove", dragging);
+    main.addEventListener("pointerup", dragStop);
+    main.addEventListener("pointercancel", dragStop);
+    window.addEventListener("pointerup", handleWindowEvent);
+    document.body.addEventListener("pointerup", handleWindowEvent);
+
     return () => {
-      target.removeEventListener("pointermove", dragging);
-      target.removeEventListener("pointerup", dragStop);
-      target.removeEventListener("pointercancel", dragStop);
+      main.removeEventListener("pointermove", dragging);
+      main.removeEventListener("pointerup", dragStop);
+      main.removeEventListener("pointercancel", dragStop);
+
+      window.removeEventListener("pointerup", handleWindowEvent);
+      document.body.removeEventListener("pointerup", handleWindowEvent);
     };
   }, [
     backdrop,
@@ -292,7 +231,6 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
             // overflow: overflow,
 
             // height: 61  + "dvh",
-            // height: Math.round(middleHeight+fullHeight) + "dvh",
 
             // height: (95 - mousePos) + "dvh",
             // height: Math.max(Math.round(95 - mousePos), 45) + "dvh",
@@ -302,11 +240,7 @@ export function Drawer({ children, openDrawer, setOpenDrawer }: DrawerProps) {
         >
           {children}
         </div>
-        {/* {React.cloneElement(children, { draggable })} */}
-        {/* {React.Children.map(children, (child) => {
-          return React.cloneElement(child, { draggable });
-        })} */}
       </div>
     </div>
   );
-}
+};

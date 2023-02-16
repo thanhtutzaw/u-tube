@@ -18,36 +18,32 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {/* <div className={styles.bottom}> */}
-          <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
-            <PrimaryInput />  
-            <Comment>
-              {Array.from(Array(10), (_, i) => (
-                <Item key={i} />
-              ))}
-            </Comment>
-          </Drawer>
-        {/* </div> */}
-        {/* <div className={styles.top}> */}
-          <Video />
+        <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}>
+          <PrimaryInput />
+          <Comment>
+            {Array.from(Array(10), (_, i) => (
+              <Item key={i} />
+            ))}
+          </Comment>
+        </Drawer>
+        <Video />
 
-          <div className={styles.topContent}>
-            <div
+        <div className={styles.topContent}>
+          <div
             className={styles.showComment}
-              onClick={() => {
-                setOpenDrawer((prev) => !prev);
-                // inputRef.current?.focus()
-              }}
-            >
-              Add Comment
-            </div>
-
-            <VideoLink />
-            <VideoLink />
-            <VideoLink />
-            <VideoLink />
+            onClick={() => {
+              setOpenDrawer((prev) => !prev);
+              // inputRef.current?.focus()
+            }}
+          >
+            Add Comment
           </div>
-        {/* </div> */}
+
+          <VideoLink />
+          <VideoLink />
+          <VideoLink />
+          <VideoLink />
+        </div>
       </main>
     </>
   );
@@ -57,7 +53,7 @@ function Video() {
   const vid = useCallback((x: any) => (x.volume = 0.06), []);
   return (
     <video
-    className={styles.player}
+      className={styles.player}
       width="500"
       muted // autoPlay={true}
       controls
