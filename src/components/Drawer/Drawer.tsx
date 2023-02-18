@@ -99,7 +99,6 @@ export const Drawer = ({
 
                 // target.style.transition = `transform .05s ease`;
                 container.style.transition = `unset`;
-                // console.log(newPos);
             }
         }
 
@@ -133,7 +132,6 @@ export const Drawer = ({
                 closeSnap(100);
             } else if (full) {
                 fullSnap(fullHeight);
-                // if()
             }
         }
 
@@ -222,13 +220,19 @@ export const Drawer = ({
             <CSSTransition
                 classNames={s}
                 in={openDrawer}
-                timeout={350}
+                timeout={300}
                 unmountOnExit
                 nodeRef={containerRef}
             >
                 <div
                     onPointerDown={dragStart}
                     ref={containerRef}
+                    // style={{transform:openDrawer ? "" : "translateY(100dvh)"}}
+                    // style={{
+                    //     transform: openDrawer
+                    //         ? ""
+                    //         : "translateY(100dvh)",
+                    // }}
                     // style={{
                     // transform: openDrawer
                     //     ? `translateY(${middleHeight}dvh)`
@@ -248,9 +252,9 @@ export const Drawer = ({
                         <button
                             onClick={() => {
                                 setOpenDrawer(false);
-                                if (container) {
-                                    container.style.transform = `translateY(100dvh)`;
-                                }
+                                // if (container) {
+                                //     container.style.transform = `translateY(100dvh)`;
+                                // }
                                 // container?.style.transform = "translate
                             }}
                         >
