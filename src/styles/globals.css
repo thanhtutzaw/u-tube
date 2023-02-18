@@ -94,7 +94,11 @@ video,
   /* aspect-ratio: 16 / 9; */
   /* height: calc(100vh / 4); */
 }
-
+/* a .videoCard {
+  border: 3px solid red;
+  pointer-events: none;
+  user-select: none;
+} */
 .videoCard {
   /* margin         : 10px 0; */
   margin-top      : 1rem;
@@ -105,8 +109,12 @@ video,
   font-family     : var(--font-primary);
   background-color: rgb(196, 196, 196);
   height          : 200px;
+  pointer-events: none;
+  user-select: none;
 }
-
+/* .drawer-enter-done {
+  background-color: red;
+} */
 ::-webkit-scrollbar {
   /* width        : 0.5rem;
   height       : 31rem; */

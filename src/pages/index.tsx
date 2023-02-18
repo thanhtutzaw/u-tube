@@ -30,7 +30,10 @@ export default function Home() {
                 </Drawer>
                 <Player autoplay={false} />
 
-                <div className={styles.topContent}>
+                <div
+                    style={{ pointerEvents: openDrawer ? "none" : "initial" }}
+                    className={styles.topContent}
+                >
                     <ShowComment setOpenDrawer={setOpenDrawer} />
                     <MoreVideo />
                 </div>

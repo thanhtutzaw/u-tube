@@ -8,7 +8,8 @@ export function ShowComment({ setOpenDrawer }: any) {
                 setOpenDrawer((prev: any) => !prev); // inputRef.current?.focus()
             }}
         >
-            Add Comment
+            Comments 10
+            <input type="text" readOnly placeholder="Add Comment" />
         </div>
     );
 }

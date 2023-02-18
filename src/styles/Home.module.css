@@ -1,25 +1,16 @@
 .main {
-  /* height                   : 100dvh; */
-  justify-content          : center;
-  /* padding               : 1rem; */
-  /* min-height            : 100vh; */
-  /* height                : 100%; */
-  /* min-height            : -webkit-fill-available; */
-  background-color         : white;
-  max-width                : 500px;
-  width                    : 100vw;
-  margin                   : 0 auto;
-
-  /* border                :5px solid red; */
+  justify-content             : center;
+  /* min-height               : -webkit-fill-available; */
+  background-color            : white;
+  max-width                   : 500px;
+  width                       : 100vw;
+  margin                      : 0 auto;
+  /* background-color         : blue; */
+  height                      : 100dvh;
+  overflow-x                  : hidden;
+  overflow-y                  : auto;
 }
 
-.top {
-  /* border:3px solid blue; */
-}
-
-.bottom {
-  /* border:3px solid rgb(247, 0, 0); */
-}
 
 .player {
   position: fixed;
@@ -27,32 +18,56 @@
 }
 
 .topContent {
-  /* border: 3px solid red; */
-  margin-top: 40dvh;
-  margin-top: 26.7dvh;
-  padding   : 1rem 0;
+  /* border       : 3px solid red; */
+  /* margin-top   : 40dvh; */
+  height       : calc(100dvh - 26.7dvh);
+  position     : fixed;
+  bottom       : 0;
+  overflow     : auto;
+  padding-top  : 20px;
+  /* margin-top: 26.7dvh; */
+  /* padding   : 1rem 0; */
 }
 
 .topContent>.showComment {
   /* min-width:450px; */
-  background-color           : gray;
-  background-color           : rgb(197, 195, 195);
-  background-color           : transparent;
-  padding                    : 2rem;
-  margin                     : 0 10px;
-  /* margin                  :10px 30px; */
-  border-radius              : 20px;
-  font-family                : var(--font-primary);
-  /* border                  :3px solid; */
-  /* border                  :1px solid rgb(0, 0, 0); */
-  cursor                     : pointer;
-  background-color           : rgb(224, 224, 224);
-  -webkit-tap-highlight-color: transparent;
-  color                      : black;
+  background-color              : transparent;
+  padding                       : 1rem 1.2rem;
+  margin                        : 0 10px;
+  /* border-radius              : 20px; */
+  border-radius                 : .5rem;
+  font-family                   : var(--font-primary);
+  /* border                     :3px solid; */
+  /* border                     :1px solid rgb(0, 0, 0); */
+  cursor                        : pointer;
+  color                         : black;
+  -webkit-tap-highlight-color   : transparent;
+  display                       : flex;
+  flex-direction                : column;
+  gap                           : 10px;
+  background-color: rgb(238, 238, 238);
+  background-color: rgb(230, 230, 230);
+}
+
+.topContent>.showComment>input {
+  width        : 65%;
+  border       : 0;
+  padding      : 10px;
+  border-radius: .5rem;
+  background-color: rgb(214, 214, 214);
+}
+.topContent>.showComment>input:focus{
+  outline: none;
+}
+
+.showComment:is(:hover) {
+  background-color: rgba(202, 202, 202, 0.911);
+  background-color: rgb(224, 224, 224);
 }
 
 .showComment:is(:active) {
-  background-color: rgb(197, 195, 195);
+  /* background-color: rgb(197, 195, 195); */
+  opacity: .7;
 }
 
 .likeBtn,
@@ -81,7 +96,6 @@
 .cancelBtn:active {
   background-color   : rgb(235, 235, 235);
   /* background-color: rgb(77, 77, 77); */
-
 }
 
 .cancelBtn,
