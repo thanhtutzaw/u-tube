@@ -159,7 +159,7 @@
     height                          : 100dvh;
     /* touch-action                 : none; */
 
-    transform                       : translateY(100dvh);
+    transform: translateY(100dvh);
 
     /* transform: var(--mousepos); */
     /* overflow-y                   : scroll; */
@@ -169,9 +169,11 @@
 .container.enterActive {
     transform: translateY(100dvh);
 }
+
 .container.enterDone {
     transform: translateY(0dvh);
 }
+
 .container.exit {
     transform: translateY(0dvh);
 }

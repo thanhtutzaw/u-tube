@@ -242,7 +242,6 @@ export const Drawer = ({
                     className={s.container}
                     // className={`${s.container} ${openDrawer ? s.open : ""}`}
                 >
-                    {/* <div className={s.topBar}> */}
                     <div className={s.topBarContent}>
                         <div
                             onClick={toggleFullscreen}
@@ -261,14 +260,7 @@ export const Drawer = ({
                             <Close />
                         </button>
                     </div>
-                    {/* </div> */}
                     <div
-                        // onPointerDown={(e)=>{
-                        //     // console.log("down")
-                        //     e.stopPropagation();
-                        //     e.preventDefault();
-                        //     e.currentTarget.style.touchAction='none'
-                        // }}
                         className={s.content}
                         style={{
                             height: 61 - newPos + "dvh",

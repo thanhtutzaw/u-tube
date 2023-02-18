@@ -30,7 +30,8 @@ export default function Backdrop(props: BackdropProps) {
                     backgroundColor: `rgba(0 0 0 / ${
                         props.draggable
                             ? Math.min(0.6 - props.mousePos / 100, 0.5)
-                            : props.openDrawer ? 0.5 : 0
+                            : // : props.openDrawer ? 0.5 : 0
+                              .8
                         // props.draggable ? Math.min(1.02 - props.mousePos / 100, 0.5) : 0.5
                         //1.02 decrease the space
                     })`,

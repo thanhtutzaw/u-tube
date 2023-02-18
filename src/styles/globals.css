@@ -78,27 +78,13 @@ ul {
   /* overflow-y  : scroll; */
 }
 
-/* li:last-child {
-  background-color: red;
-} */
 video,
 .videoCard {
-  max-width          : 500px;
-  width              : 100vw;
-  /* height          : 40dvh; */
-  /* height          : 35.5dvh; */
-  background-color   : black;
-  /* background-color: rgb(235, 17, 17); */
-  height             : 26.7vh;
-
-  /* aspect-ratio: 16 / 9; */
-  /* height: calc(100vh / 4); */
+  max-width       : 500px;
+  width           : 100vw;
+  background-color: black;
 }
-/* a .videoCard {
-  border: 3px solid red;
-  pointer-events: none;
-  user-select: none;
-} */
+
 .videoCard {
   /* margin         : 10px 0; */
   margin-top      : 1rem;
@@ -109,9 +95,10 @@ video,
   font-family     : var(--font-primary);
   background-color: rgb(196, 196, 196);
   height          : 200px;
-  pointer-events: none;
-  user-select: none;
+  pointer-events  : none;
+  user-select     : none;
 }
+
 /* .drawer-enter-done {
   background-color: red;
 } */
