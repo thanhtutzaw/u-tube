@@ -1,11 +1,15 @@
 import s from "@/styles/Home.module.css";
 
-export function ShowComment({ setOpenDrawer }: any) {
+export function ShowComment({ setOpenDrawer , hashRoute }: any) {
     return (
         <div
             className={s.showComment}
             onClick={() => {
-                setOpenDrawer((prev: any) => !prev); // inputRef.current?.focus()
+                window.location.hash = hashRoute;
+                // setOpenDrawer((prev: any) => !prev);
+                setOpenDrawer(true);
+
+                // inputRef.current?.focus()
             }}
         >
             Comments 10

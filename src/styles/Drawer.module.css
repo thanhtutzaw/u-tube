@@ -1,18 +1,15 @@
 .drawer {
-    /* height                      : 100vh;
-    height: -webkit-fill-available; */
-    position                       : fixed;
-    height                         : 60dvh;
-    height                         : calc(100dvh - 26.7dvh);
-    bottom                         : 0;
-    /* overflow                    : hidden; */
-    z-index                        : 100;
-    max-width                      : 500px;
-    width                          : 100vw;
-    margin                         : 0 auto;
-    pointer-events                 : none;
-    touch-action                   : none;
-    opacity                        : 1;
+    position      : fixed;
+    height        : 60dvh;
+    height        : calc(100dvh - 26.7dvh);
+    bottom        : 0;
+    max-width     : 500px;
+    width         : 100vw;
+    margin        : 0 auto;
+    pointer-events: none;
+    touch-action  : none;
+    opacity       : 1;
+    z-index       : 100;
 }
 
 /* .drawer-enter-done {
@@ -30,28 +27,6 @@
     transform          : translateY(100dvh);
 } */
 
-
-/* .backdrop.enter {
-    opacity: 0;
-    transition: all .5s ease-in;
-}
-.backdrop.enterActive {
-    opacity: 0;
-    transition: all .5s ease-in;
-}
-.backdrop.enterDone {
-    opacity: 0;
-    transition: all .5s ease-in;
-}
-.backdrop.exitActive {
-    opacity: 0;
-    transition: all .3s ease-out;
-}
-.backdrop.exitDone {
-    opacity: 0;
-    transition: all .3s ease-out;
-} */
-
 /* .exitDone {
     transform : translateY(100dvh);
 } */
@@ -60,56 +35,26 @@
     pointer-events : auto;
 } */
 .backdrop {
-    /* height             : 100%; */
-    position           : fixed;
-    height             : 60dvh;
-    height             : calc(100dvh - 26.7dvh);
-    bottom             : 0;
-    width              : 100vw;
-    max-width          : 500px;
-    margin             : 0 auto;
-    transition         : all .3s ease-in-out, width 0s, height 0s, backgroundColor .0s;
-    /* transition      : all .1s ease-out; */
-    opacity            : 0;
+    position  : fixed;
+    height    : 60dvh;
+    height    : calc(100dvh - 26.7dvh);
+    bottom    : 0;
+    width     : 100vw;
+    max-width : 500px;
+    margin    : 0 auto;
+    transition: all .3s ease-in-out, width 0s, height 0s, backgroundColor .0s;
+    opacity   : 0;
 }
 
 .backdrop.enterActive {
-    /* background-color: rgb(217, 255, 0) !important; */
-    opacity            : 0;
-    /* background-color: red !important; */
+    opacity: 0;
 }
 
 .backdrop.enterDone {
-    opacity            : 1;
-    /* background-color: rgb(0, 255, 34) !important; */
-
-}
-
-.backdrop.exitDone {
-    /* background-color: rgb(25, 0, 255) !important; */
-    /* opacity: 0; */
-}
-
-.backdrop.exitActive {
-    /* background-color: red !important; */
-    /* opacity   : 1; */
-    /* transition: opacity .3s ease-in-out; */
-}
-
-/* .backdrop.open{
     opacity: 1;
-} */
 
-/* .backdrop.appear {
-    opacity: 0;
-}
-.backdrop.appearActive {
-    opacity: 1;
 }
 
-.backdrop-appear-active {
-    opacity: 1;
-} */
 /* 
 .drawer-enterDone .backdrop{
     opacity: 1;
@@ -143,35 +88,21 @@
 } */
 
 .container {
-    /* background-color                : rgb(214, 214, 214); */
-    /* background-color                : rgb(230, 230, 230); */
-    background-color                : rgb(255, 255, 255);
-    /* background-color             : red; */
-    border-top-left-radius          : 1rem;
-    border-top-right-radius         : 1rem;
-    /* transform                    : translateY(700px); */
-    /* transform                    : translateY(100vh); */
-    /* transition                   : transform .3s cubic-bezier(1, 0, 0, 1.02); */
-    /* transition                   : transform .1s ease; */
-    transition                      : transform .3s ease-in-out;
-    /* will-change                  : transform; */
-    /* height                       : 100vh; */
-    height                          : 100dvh;
-    /* touch-action                 : none; */
-
-    transform: translateY(100dvh);
-
-    /* transform: var(--mousepos); */
-    /* overflow-y                   : scroll; */
+    background-color       : rgb(255, 255, 255);
+    border-top-left-radius : 1rem;
+    border-top-right-radius: 1rem;
+    transition             : transform .2s ease-in-out;
+    height                 : 100dvh;
+    transform              : translateY(100dvh);
 }
-
 
 .container.enterActive {
     transform: translateY(100dvh);
 }
 
 .container.enterDone {
-    transform: translateY(0dvh);
+    transform : translateY(0dvh);
+    transition: transform 200ms ease-in-out;
 }
 
 .container.exit {
@@ -180,7 +111,7 @@
 
 .container.exitActive {
     transform : translateY(100dvh);
-    transition: transform 600ms ease-in-out;
+    transition: transform 250ms ease-in-out;
 }
 
 .container.exitDone {
@@ -226,17 +157,10 @@
 
 
 .content {
-    /* height          : 95vh; */
-    /* height          : 45vh; */
-
-    overflow-x         : hidden;
-    overflow-y         : scroll;
-    /* overflow        : auto; */
-    /* background-color: rgba(255, 145, 0, 0.945); */
-    will-change        : height;
-    height             : 100vh;
-    /* border          :4px solid red; */
-    /* touch-action    : none; */
+    overflow-x : hidden;
+    overflow-y : scroll;
+    will-change: height;
+    height     : 100vh;
 }
 
 .content:hover::-webkit-scrollbar-thumb {
@@ -249,27 +173,34 @@
 }
 
 .phill {
-    background-color      : rgb(199 199 199);
-    /* width              : 30px; */
-    width                 : 50px;
-    height                : 6px;
-    border-radius         : 1rem;
-    position              : absolute;
-    top                   : 11px;
-    /* left               : calc(50% - 25px); */
-    left                  : 50%;
-    right                 : 50%;
-    transform             : translate(-50%);
-    cursor                : pointer;
+    background-color: rgb(199 199 199);
+    width           : 50px;
+    height          : 6px;
+    border-radius   : 1rem;
+    position        : absolute;
+    top             : 11px;
+    left            : 50%;
+    right           : 50%;
+    transform       : translate(-50%);
+    cursor          : pointer;
+}
+
+.ignoreClick {
+    pointer-events: initial;
+}
+
+@media (hover:hover) and (pointer:fine) {
+    .ignoreClick {
+        pointer-events: none;
+    }
 }
 
 .topBarContent {
-    padding         : 1rem;
-    display         : flex;
-    align-items     : center;
-    font-family     : var(--font-primary);
-    border-bottom   : 1px solid #e3e3e3;
-    /* border       : 3px solid rgb(255, 0, 0); */
+    padding      : 1rem;
+    display      : flex;
+    align-items  : center;
+    font-family  : var(--font-primary);
+    border-bottom: 1px solid #e3e3e3;
 }
 
 .topBarContent h3 {
@@ -277,15 +208,16 @@
 }
 
 .topBarContent button {
-    display         : flex;
-    border-radius   : 50%;
-    padding         : 10px;
-    border          : 0;
-    font-size       : 100%;
-    width           : 52px;
-    height          : 52px;
-    background-color: transparent;
-    touch-action    : none;
+    display                    : flex;
+    border-radius              : 50%;
+    padding                    : 10px;
+    border                     : 0;
+    font-size                  : 100%;
+    width                      : 52px;
+    height                     : 52px;
+    background-color           : transparent;
+    cursor                     : pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .topBarContent svg {
@@ -301,9 +233,12 @@
 }
 
 .topBarContent button:is(:active) {
-    /* background-color: rgb(235, 235, 235); */
-    /* border:3px solid red; */
     background-color: rgb(226, 226, 226);
     opacity         : .7;
     transition      : all .2s ease-in-out;
 }
+
+/* 
+.topBarContent button:active {
+    background-color: green;
+} */

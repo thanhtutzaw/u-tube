@@ -7,7 +7,6 @@ export default function Backdrop(props: BackdropProps) {
     return (
         <CSSTransition
             classNames={s}
-            // appear={true}
             in={props.openDrawer}
             timeout={200}
             unmountOnExit
@@ -19,19 +18,12 @@ export default function Backdrop(props: BackdropProps) {
                     props.setOpenDrawer(false);
                 }}
                 ref={props.backdropRef}
-                // onTransitionEnd={(e) => {
-                //     if (!props.openDrawer) {
-                //         e.currentTarget.style.opacity = "0";
-                //     }
-                // }}
-                // nodeRef={props.backdropRef}
-                // onClick={() => props.setOpenDrawer(false)}
                 style={{
                     backgroundColor: `rgba(0 0 0 / ${
                         props.draggable
                             ? Math.min(0.6 - props.mousePos / 100, 0.5)
                             : // : props.openDrawer ? 0.5 : 0
-                              .8
+                              0.5
                         // props.draggable ? Math.min(1.02 - props.mousePos / 100, 0.5) : 0.5
                         //1.02 decrease the space
                     })`,
