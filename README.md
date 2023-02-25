@@ -10,7 +10,7 @@
 - [x] Drag , Release and Snap
 - [x] Toggle Fullscreen
 - [x] Unmount on exit
-- [x] Close Drawer with Keyboard (escape and back key)
+- [x] Close Drawer with Escape and Back key
 
 ### Tech Stack
 - Next.js
