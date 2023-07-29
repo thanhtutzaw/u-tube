@@ -129,7 +129,7 @@ video,
 } */
 ::-webkit-scrollbar-thumb {
   background-color      : transparent;
-  opacity               : .3;
+  opacity               : 0;
   width                 : 0.5rem;
   /* border-radius      : 13px; */
   /* background         : #c5c5c5; */
